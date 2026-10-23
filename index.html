@@ -63,7 +63,7 @@ button{-webkit-tap-highlight-color:transparent}
 .acct .dot.ok{background:#7ff0b5;box-shadow:0 0 10px #7ff0b5}.acct .dot.warn{background:#ffc979;box-shadow:0 0 10px #ffc979}
 
 .hud .play+.play{margin-top:0}
-.hud{position:fixed;z-index:2;top:calc(100px + env(safe-area-inset-top,0px));left:max(28px,calc(env(safe-area-inset-left,0px) + 16px));display:flex;flex-direction:column;gap:6px;pointer-events:none;max-width:44vw}
+.hud{position:fixed;z-index:2;top:calc(100px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:6px;pointer-events:none;max-width:44vw}
 .hud .eyebrow{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;align-items:center}
 .hud .big{font-family:var(--f-display);font-weight:300;font-size:64px;line-height:1;letter-spacing:-.02em;background:linear-gradient(180deg,#fff 20%,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px var(--glow));font-variant-numeric:tabular-nums}
 .hud .sub{font-size:14px;color:var(--muted)}
@@ -285,11 +285,44 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
 .gnav{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
 @media (max-width:899px){.ob.intro{align-items:flex-end;background:linear-gradient(0deg,color-mix(in srgb,var(--bg) 92%,transparent) 0%,color-mix(in srgb,var(--bg) 70%,transparent) 55%,transparent 85%)}.ob .in{padding-left:0}.feats{grid-template-columns:1fr}.feat{flex-direction:row;align-items:flex-start;gap:12px}.feat i{flex:none}.ob .lead{font-size:15.5px}.gill{height:150px}.card2,.guide{padding:20px}}
 @media (max-width:899px) and (max-height:760px){.feats{display:none}}
+.tpw{position:relative}
+.hbtn.theme{width:auto;display:flex;align-items:center;gap:8px;padding:0 13px 0 7px;border-radius:999px;font-size:13px;font-weight:600}
+.sw{display:inline-block;width:24px;height:24px;border-radius:50%;flex:none;box-shadow:inset 0 1px 2px rgba(255,255,255,.4),0 0 12px -2px var(--glow)}
+.sw-violet{background:radial-gradient(circle at 35% 30%,#f2c7ff,#9b6bff 55%,#3b1a8f)}
+.sw-azure{background:radial-gradient(circle at 35% 30%,#d6fbff,#40d4f5 55%,#0b5d7a)}
+.sw-blue{background:radial-gradient(circle at 35% 30%,#d4e0ff,#4f7dff 55%,#1a2a8a)}
+.sw-rose{background:radial-gradient(circle at 35% 30%,#fff0f6,#ff9ec4 55%,#a3376a)}
+.themepop{position:absolute;top:calc(100% + 12px);right:0;width:230px;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:2px;background-color:color-mix(in srgb,var(--bg) 90%,transparent);z-index:9;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 60px -12px rgba(0,0,0,.8)}
+.themepop .eyebrow{padding:2px 8px 8px}
+.trow{display:flex;align-items:center;gap:12px;height:44px;padding:0 10px;border-radius:12px;border:0;background:none;cursor:pointer;font-size:14px;font-weight:500;text-align:left}
+.trow:hover{background:rgba(255,255,255,.07)}
+.trow .ck{margin-left:auto;font-style:normal;color:var(--accent);opacity:0}
+.trow[aria-checked="true"] .ck{opacity:1}
+.trow[aria-checked="true"]{background:rgba(255,255,255,.06)}
+.hbtn.music svg{display:block;margin:auto;fill:var(--muted)}
+.hbtn.music.on{border-color:color-mix(in srgb,var(--accent) 55%,transparent);box-shadow:0 0 20px -6px var(--glow)}
+.hbtn.music.on svg{fill:var(--accent)}
+.hbtn.music.on .eq{animation:eq 1.6s ease-in-out infinite;transform-origin:center bottom;transform-box:fill-box}
+.hbtn.music.on .e2{animation-delay:-.5s}.hbtn.music.on .e3{animation-delay:-1s}
+@keyframes eq{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
+@media (hover:hover){[data-tip]{position:relative}[data-tip]:hover::after{content:attr(data-tip);position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 10px;border-radius:9px;font-size:12px;font-weight:500;color:var(--text);background:var(--glass-strong);border:1px solid var(--stroke-2);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);pointer-events:none;z-index:20}
+ .tpw:has(.themepop:not([hidden])) [data-tip]:hover::after{display:none}}
+.chole{position:fixed;z-index:40;border-radius:18px;box-shadow:0 0 0 2px var(--accent),0 0 30px 4px var(--glow),0 0 0 9999px color-mix(in srgb,var(--bg) 62%,transparent);transition:all .45s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.coach{position:fixed;z-index:41;width:min(320px,calc(100vw - 32px));border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;background-color:var(--glass-strong);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s;left:0;top:0}
+.coach .ct{font-family:var(--f-display);font-size:20px;line-height:1.25}
+.coach p{font-size:14px;line-height:1.55;color:color-mix(in srgb,var(--text) 86%,transparent)}
+.coach .cn{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.coach .cnum{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.guide .x2{top:34px;right:34px;background:color-mix(in srgb,var(--bg) 60%,transparent)}
 .nogl{position:fixed;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted);padding:40px;pointer-events:none}
 
 @media (max-width:899px){
   :root{--sheet:46%}
   .hbtn{width:36px;height:36px}
+  .bar{gap:8px}
+  .hbtn.theme{width:36px;padding:0;justify-content:center}.hbtn.theme .lbl{display:none}.hbtn.theme .sw{width:22px;height:22px}
+  .seg{gap:2px;margin-left:8px;margin-right:8px}.seg button{font-size:12px;padding:8px 4px}
+  .guide .x2{top:30px;right:30px}
   .bar{height:54px;padding:0 8px 0 14px}
   .brand{font-size:16px}.brand small{display:none}
   .acct{max-width:44px;padding:0 12px}.acct b{display:none}
@@ -315,14 +348,19 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
     Neuroglobe <small>beta</small>
   </div>
   <div class="sp"></div>
-  <div class="pals" role="group" aria-label="Цветовая тема">
-    <button data-p="violet" aria-label="Фиолетовая тема" title="Фиолетовая"></button>
-    <button data-p="azure" aria-label="Голубая тема" title="Голубая"></button>
-    <button data-p="blue" aria-label="Синяя тема" title="Синяя"></button>
-    <button data-p="rose" aria-label="Нежно-розовая тема" title="Нежно-розовая"></button>
+  <div class="tpw">
+    <button class="hbtn theme" id="themeBtn" aria-haspopup="true" aria-expanded="false" data-tip="Цвет темы"><span class="sw" id="themeSw"></span><span class="lbl">Цвет</span></button>
+    <div class="themepop glass" id="themePop" hidden role="menu" aria-label="Цвет темы">
+      <p class="eyebrow">Цвет темы</p>
+      <button class="trow" role="menuitemradio" data-p="violet"><span class="sw sw-violet"></span>Фиолетовая<i class="ck">✓</i></button>
+      <button class="trow" role="menuitemradio" data-p="azure"><span class="sw sw-azure"></span>Голубая<i class="ck">✓</i></button>
+      <button class="trow" role="menuitemradio" data-p="blue"><span class="sw sw-blue"></span>Синяя<i class="ck">✓</i></button>
+      <button class="trow" role="menuitemradio" data-p="rose"><span class="sw sw-rose"></span>Нежно-розовая<i class="ck">✓</i></button>
+    </div>
   </div>
-  <button class="hbtn" id="helpBtn" aria-label="Как пользоваться" title="Как пользоваться">?</button>
-  <button class="acct" id="acctBtn" title="Аккаунт"><span class="dot" id="whoDot"></span><b id="whoName">Подключаемся…</b></button>
+  <button class="hbtn music" id="musicBtn" aria-pressed="false" aria-label="Музыка" data-tip="Включить музыку"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect class="eq e1" x="3" y="6" width="2.4" height="8" rx="1.2"/><rect class="eq e2" x="7.8" y="3" width="2.4" height="11" rx="1.2"/><rect class="eq e3" x="12.6" y="8" width="2.4" height="6" rx="1.2"/></svg></button>
+  <button class="hbtn" id="helpBtn" aria-label="Как пользоваться" data-tip="Как пользоваться">?</button>
+  <button class="acct" id="acctBtn" data-tip="Где хранятся книги"><span class="dot" id="whoDot"></span><b id="whoName">Подключаемся…</b></button>
 </header>
 
 <section class="hud" aria-live="polite">
@@ -353,6 +391,7 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
 <section class="tlbar glass" id="tlbar" hidden aria-live="polite"></section>
 <div class="wrap" id="wrap" hidden role="dialog" aria-modal="true" aria-label="Итоги чтения"><div class="wrapin glass" id="wrapin"></div></div>
 <div class="ob" id="ob" hidden></div>
+<div class="chole" id="chole" hidden></div><div class="coach glass" id="coach" hidden role="dialog" aria-live="polite"></div>
 <input type="file" id="importIn" accept="application/json,.json" hidden>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1460,8 +1499,8 @@ try{GL=initGlobe()}catch(err){console.error(err);const d=document.createElement(
 
 function initGlobe(){
   const canvas=$("#globe");
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});
-  let pr=Math.min(window.devicePixelRatio||1,1.75);renderer.setPixelRatio(pr);
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:"high-performance"});
+  let pr=Math.min(window.devicePixelRatio||1,2);renderer.setPixelRatio(pr);
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(34,1,0.1,200);
   const world=new THREE.Group();scene.add(world);
@@ -1523,14 +1562,36 @@ function initGlobe(){
     [[128,3],[3,128]].forEach(([w,h])=>{const l=g.createLinearGradient(64-w/2,64-h/2,64+w/2,64+h/2);l.addColorStop(0,"rgba(255,255,255,0)");l.addColorStop(.5,"rgba(255,255,255,.9)");l.addColorStop(1,"rgba(255,255,255,0)");g.fillStyle=l;g.fillRect(64-w/2,64-h/2,w,h)});return new THREE.CanvasTexture(c)})();
   const flares=[];for(let i=0;i<46;i++){v.set(Math.random()*2-1,Math.random()*2-1,-0.2-Math.random()).normalize().multiplyScalar(16+Math.random()*20);
     const m=new THREE.Sprite(new THREE.SpriteMaterial({map:flareTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0.7}));m.position.copy(v);const k=0.35+Math.random()*0.7;m.scale.set(k,k,1);m.userData={k,ph:Math.random()*6.28,sp:0.4+Math.random()*1.2};stars.add(m);flares.push(m)}
-  const neb=[[-3.2,1.6,-9,13],[3.6,-2.2,-11,15],[0.5,3.4,-14,11]].map(([x,y,z,s])=>{const m=new THREE.Sprite(new THREE.SpriteMaterial({map:softTex,transparent:true,opacity:0.22,depthWrite:false,blending:THREE.AdditiveBlending}));m.position.set(x,y,z);m.scale.set(s,s,1);scene.add(m);return m});
+  // туманность: шейдер с фрактальным шумом, запекается в кубическую карту один раз (и при смене темы)
+  const nebScene=new THREE.Scene();
+  const nebMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,uniforms:{uBg:{value:new THREE.Color()},uC1:{value:new THREE.Color()},uC2:{value:new THREE.Color()},uC3:{value:new THREE.Color()}},
+    vertexShader:`varying vec3 vD;void main(){vD=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`uniform vec3 uBg,uC1,uC2,uC3;varying vec3 vD;
+      float h(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
+      float n(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);return mix(mix(mix(h(i),h(i+vec3(1,0,0)),f.x),mix(h(i+vec3(0,1,0)),h(i+vec3(1,1,0)),f.x),f.y),mix(mix(h(i+vec3(0,0,1)),h(i+vec3(1,0,1)),f.x),mix(h(i+vec3(0,1,1)),h(i+vec3(1,1,1)),f.x),f.y),f.z);}
+      float fbm(vec3 p){float v=0.,a=.5;for(int i=0;i<6;i++){v+=a*n(p);p=p*2.02+vec3(1.7,9.2,3.1);a*=.5;}return v;}
+      void main(){vec3 d=normalize(vD);vec3 q=d*2.4;
+        float w=fbm(q*1.6+3.);float c=fbm(q+w*1.5);
+        float band=exp(-pow(dot(d,normalize(vec3(.35,1.,.2)))*2.2,2.));
+        float cloud=smoothstep(.42,.92,c)*(.25+.95*band);
+        float dust=smoothstep(.48,.78,fbm(q*3.3+7.+w))*band;
+        float glow=smoothstep(.6,1.,c)*band;
+        vec3 col=mix(uC1,uC2,smoothstep(.35,.85,fbm(q*1.2+11.)));
+        col=mix(col,uC3,glow*.6);
+        vec3 o=uBg+col*cloud*(1.-dust*.8)*.42+uC3*glow*.08;
+        float g=fract(sin(dot(d.xy*311.+d.z,vec2(12.9898,78.233)))*43758.5453);o+=(g-.5)/255.;
+        gl_FragColor=vec4(o,1.);}`});
+  nebScene.add(new THREE.Mesh(new THREE.SphereGeometry(50,64,48),nebMat));
+  let nebRT=null,nebCam=null;try{nebRT=new THREE.WebGLCubeRenderTarget(1024,{generateMipmaps:false});nebCam=new THREE.CubeCamera(1,100,nebRT)}catch(e){nebRT=null}
+  function bakeNebula(){if(!nebCam){return}nebCam.update(renderer,nebScene);scene.background=nebRT.texture}
+  const neb=[[0.5,0.2,-6,6.5]].map(([x,y,z,s])=>{const m=new THREE.Sprite(new THREE.SpriteMaterial({map:softTex,transparent:true,opacity:0.22,depthWrite:false,blending:THREE.AdditiveBlending}));m.position.set(x,y,z);m.scale.set(s,s,1);scene.add(m);return m});
 
   const ringTex=(()=>{const c=document.createElement("canvas");c.width=c.height=128;const g=c.getContext("2d");g.strokeStyle="#fff";g.lineWidth=5;g.beginPath();g.arc(64,64,54,0,Math.PI*2);g.stroke();g.globalAlpha=.35;g.lineWidth=2;g.beginPath();g.arc(64,64,40,0,Math.PI*2);g.stroke();return new THREE.CanvasTexture(c)})();
   const ring=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));ring.visible=false;world.add(ring);
 
   // постобработка: свечение
   let composer=null,bloom=null,useBloom=!!(THREE.EffectComposer&&THREE.UnrealBloomPass);
-  if(useBloom){composer=new THREE.EffectComposer(renderer);composer.addPass(new THREE.RenderPass(scene,camera));bloom=new THREE.UnrealBloomPass(new THREE.Vector2(256,256),0.95,0.62,0.12);composer.addPass(bloom)}
+  if(useBloom){let rt=null;try{if(renderer.capabilities.isWebGL2&&THREE.WebGLMultisampleRenderTarget){rt=new THREE.WebGLMultisampleRenderTarget(256,256,{format:THREE.RGBAFormat});rt.samples=4}}catch(e){rt=null}composer=rt?new THREE.EffectComposer(renderer,rt):new THREE.EffectComposer(renderer);composer.addPass(new THREE.RenderPass(scene,camera));bloom=new THREE.UnrealBloomPass(new THREE.Vector2(256,256),0.95,0.62,0.12);composer.addPass(bloom)}
 
   // книги
   let layer=new THREE.Group();world.add(layer);let pick=[],arcs=[],nodes={};const posById={};
@@ -1564,15 +1625,15 @@ function initGlobe(){
 
   // палитра
   function palette(name){const p=PAL[name];scene.background=new THREE.Color(p.bg);U.uBase.value.set(p.base);coreMat.uniforms.uCore.value.set(p.core);coreMat.uniforms.uRim.value.set(p.rim);atmoMat.uniforms.uColor.value.set(p.atmo);
-    neb[0].material.color.set(p.neb1);neb[1].material.color.set(p.neb2);neb[2].material.color.set(p.atmo);starMat.uniforms.uTint.value.set(p.ring);ring.material.color.set(p.ring);arcs.forEach(a=>{if(a.type==="path")a.m.uniforms.uColor.value.set(p.path)})}
+    neb[0].material.color.set(p.atmo);neb[0].material.opacity=0.16;nebMat.uniforms.uBg.value.set(p.bg);nebMat.uniforms.uC1.value.set(p.neb1);nebMat.uniforms.uC2.value.set(p.neb2);nebMat.uniforms.uC3.value.set(p.rim);bakeNebula();starMat.uniforms.uTint.value.set(p.ring);ring.material.color.set(p.ring);arcs.forEach(a=>{if(a.type==="path")a.m.uniforms.uColor.value.set(p.path)})}
 
   // метки областей
   const labelsEl=$("#labels");const labelEls=D.map(d=>{const e=document.createElement("div");e.className="rl";e.innerHTML=`<i style="background:${d.color};color:${d.color}"></i>${d.name}`;labelsEl.appendChild(e);return e});
 
   // управление
   let rotQ=new THREE.Quaternion().setFromEuler(new THREE.Euler(0.32,-0.5,0)),targetQ=null,idle=0,zoom=1,zoomT=1,baseDist=4,dist=4.6;
-  const pointers=new Map();let pinch0=0,zoom0=1,down=null,moved=0;
-  canvas.addEventListener("pointerdown",e=>{canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});down={x:e.clientX,y:e.clientY};moved=0;targetQ=null;idle=0;canvas.classList.add("drag");
+  const pointers=new Map();let pinch0=0,zoom0=1,down=null,moved=0,spinX=0,spinY=0,lastMove=0,autoV=0;
+  canvas.addEventListener("pointerdown",e=>{canvas.setPointerCapture(e.pointerId);spinX=spinY=0;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});down={x:e.clientX,y:e.clientY};moved=0;targetQ=null;idle=0;canvas.classList.add("drag");
     if(pointers.size===2){const [a,b]=[...pointers.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);zoom0=zoomT}});
   canvas.addEventListener("pointermove",e=>{
     if(!pointers.has(e.pointerId)){if(e.pointerType==="mouse")hoverAt(e);return}
@@ -1580,8 +1641,9 @@ function initGlobe(){
     if(pointers.size===2){const [a,b]=[...pointers.values()];if(pinch0)setZoom(zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0);return}
     const s=2.4/Math.max(canvas.clientHeight,1)/zoom;
     rotQ.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),dx*s)).premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),dy*s));
+    const nowT=performance.now(),dtm=Math.max(8,nowT-lastMove)/1000;lastMove=nowT;spinY+=(dx*s/dtm-spinY)*0.5;spinX+=(dy*s/dtm-spinX)*0.5;
     if(moved>8)setHover(null);});
-  function up(e){pointers.delete(e.pointerId);if(pointers.size<2)pinch0=0;canvas.classList.remove("drag");if(down&&moved<8&&pointers.size===0){const h=hitAt(e);if(h)select(h.id);else if(S.pop){S.pop=false;renderPop()}}down=null}
+  function up(e){pointers.delete(e.pointerId);if(performance.now()-lastMove>90||pointers.size>0){spinX=spinY=0}const cap=3.5;spinX=Math.max(-cap,Math.min(cap,spinX));spinY=Math.max(-cap,Math.min(cap,spinY));if(pointers.size<2)pinch0=0;canvas.classList.remove("drag");if(down&&moved<8&&pointers.size===0){const h=hitAt(e);if(h)select(h.id);else if(S.pop){S.pop=false;renderPop()}}down=null}
   canvas.addEventListener("pointerup",up);canvas.addEventListener("pointercancel",up);canvas.addEventListener("pointerleave",()=>setHover(null));
   canvas.addEventListener("wheel",e=>{e.preventDefault();setZoom(zoomT*(1-e.deltaY*0.0012))},{passive:false});
   function setZoom(z){zoomT=Math.max(0.6,Math.min(2.2,z))}
@@ -1616,10 +1678,12 @@ function initGlobe(){
     arcT+=dt;arcs.forEach(a=>{const r=reduce?1.01:Math.min(1.01,Math.max(0,(arcT-0.8-a.start)*1.4));a.m.uniforms.uReveal.value=r;
       const hi=(S.hover&&(a.a===S.hover||a.b===S.hover))||(S.selected&&(a.a===S.selected||a.b===S.selected));a.m.uniforms.uHi.value+=((hi?1:0)-a.m.uniforms.uHi.value)*Math.min(1,dt*8)});
     Object.entries(nodes).forEach(([id,n])=>{const hot=id===S.hover||id===S.selected;const dim=S.focus>-1&&n.di!==S.focus;const want=n.st==="want";const ts=hot?0.26:dim?0.09:want?0.1:0.15;n.s+=(ts-n.s)*Math.min(1,dt*10);const pu=n.st==="reading"&&!reduce?1+0.45*(0.5+0.5*Math.sin(t/260)):1;n.halo.scale.set(n.s*pu,n.s*pu,1);n.halo.material.opacity=dim?0.25:want?0.28:n.st==="reading"?0.6+0.4*(pu-1)/0.45:0.9;n.core.material.opacity=dim?0.35:want?0.4:1});
-    if(targetQ){rotQ.slerp(targetQ,Math.min(1,dt*3.2));if(rotQ.angleTo(targetQ)<0.002)targetQ=null}
-    else if(!reduce&&idle>3.5&&pointers.size===0&&!S.hover)rotQ.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),dt*0.05));
+    if(targetQ){spinX=spinY=0;rotQ.slerp(targetQ,1-Math.exp(-dt*3.6));if(rotQ.angleTo(targetQ)<0.002)targetQ=null}
+    else if(pointers.size===0){
+      if(Math.abs(spinX)+Math.abs(spinY)>0.002&&!reduce){rotQ.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),spinY*dt)).premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),spinX*dt));const k=Math.exp(-dt*2.4);spinX*=k;spinY*=k;idle=0}
+      const tv=(!reduce&&idle>3&&!S.hover)?0.05:0;autoV+=(tv-autoV)*Math.min(1,dt*0.9);if(autoV>0.0005)rotQ.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),autoV*dt))}
     world.quaternion.copy(rotQ);stars.rotation.y+=dt*0.004;if(!reduce)flares.forEach(f=>{const q=f.userData.k*(0.8+0.25*Math.sin(t/1000*f.userData.sp+f.userData.ph));f.scale.set(q,q,1)});
-    zoom+=(zoomT-zoom)*Math.min(1,dt*8);const want=baseDist/zoom;dist+=(want-dist)*Math.min(1,dt*(reduce?20:3));camera.position.set(0,0,dist);
+    zoom+=(zoomT-zoom)*(1-Math.exp(-dt*7));const want=baseDist/zoom;dist+=(want-dist)*Math.min(1,dt*(reduce?20:3));camera.position.set(0,0,dist);
     const sel=S.selected&&posById[S.selected]&&nodes[S.selected];ring.visible=!!sel;if(sel){ring.position.copy(posById[S.selected]).multiplyScalar(1.01);const s=0.13+(reduce?0:Math.sin(t/320)*0.015);ring.scale.set(s,s,1)}
     if(useBloom)composer.render();else renderer.render(scene,camera);
     // адаптация качества, как у глобуса GitHub: при низком FPS отключаем свечение
@@ -1635,8 +1699,72 @@ function initGlobe(){
 }
 
 /* ================= Интерфейс ================= */
-function applyPalette(name){S.palette=PAL[name]?name:"violet";document.documentElement.dataset.palette=S.palette;document.querySelectorAll(".pals button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.p===S.palette)));if(GL)GL.palette(S.palette);store("neuroglobe.palette",S.palette)}
-document.querySelectorAll(".pals button").forEach(b=>b.onclick=()=>applyPalette(b.dataset.p));
+function applyPalette(name){S.palette=PAL[name]?name:"violet";document.documentElement.dataset.palette=S.palette;document.querySelectorAll(".trow[data-p]").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.p===S.palette)));$("#themeSw").className="sw sw-"+S.palette;if(GL)GL.palette(S.palette);store("neuroglobe.palette",S.palette)}
+function themePop(open){const p=$("#themePop"),b=$("#themeBtn");p.hidden=!open;b.setAttribute("aria-expanded",String(open))}
+$("#themeBtn").onclick=e=>{e.stopPropagation();themePop($("#themePop").hidden)};
+document.querySelectorAll(".trow[data-p]").forEach(b=>b.onclick=e=>{e.stopPropagation();applyPalette(b.dataset.p);setTimeout(()=>themePop(false),180)});
+document.addEventListener("click",e=>{if(!e.target.closest(".tpw"))themePop(false)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#themePop").hidden)themePop(false)});
+
+/* ---------- Музыка: генеративный эмбиент на Web Audio ---------- */
+const MUS={ctx:null,on:false,master:null,timer:0,nextChord:0,nextBell:0,ci:0};
+const mtof=m=>440*Math.pow(2,(m-69)/12);
+const CHORDS=[[50,57,64,66,69],[47,54,61,62,66],[43,50,57,62,66],[45,52,59,61,64]];
+const BELLS=[74,76,78,81,83,86,88,90];
+function musInit(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;const c=new AC();MUS.ctx=c;
+  const master=c.createGain();master.gain.value=0.0001;const comp=c.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=3;master.connect(comp);comp.connect(c.destination);MUS.master=master;
+  const len=Math.floor(c.sampleRate*5.5),ir=c.createBuffer(2,len,c.sampleRate);for(let ch=0;ch<2;ch++){const d=ir.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.8)}
+  const rev=c.createConvolver();rev.buffer=ir;const wet=c.createGain();wet.gain.value=0.85;rev.connect(wet);wet.connect(master);
+  const dry=c.createGain();dry.gain.value=0.3;dry.connect(master);
+  const lp=c.createBiquadFilter();lp.type="lowpass";lp.frequency.value=950;lp.Q.value=0.5;lp.connect(dry);lp.connect(rev);
+  const lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.value=0.045;lg.gain.value=380;lfo.connect(lg);lg.connect(lp.frequency);lfo.start();
+  const dr=c.createOscillator();dr.type="sine";dr.frequency.value=mtof(38);const dg=c.createGain();dg.gain.value=0.06;dr.connect(dg);dg.connect(lp);dr.start();
+  MUS.pad=lp;MUS.rev=rev;MUS.dry=dry;return true}
+function musChord(t){const c=MUS.ctx,notes=CHORDS[MUS.ci++%CHORDS.length],dur=17;
+  notes.forEach((m,k)=>{[-7,7].forEach(det=>{const o=c.createOscillator();o.type=k===0?"sine":"triangle";o.frequency.value=mtof(m);o.detune.value=det+(Math.random()*4-2);const g=c.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.02,t+5.5);g.gain.setValueAtTime(0.02,t+dur-6);g.gain.linearRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(MUS.pad);o.start(t);o.stop(t+dur+0.2)})})}
+function musBell(t){const c=MUS.ctx,m=BELLS[(Math.random()*BELLS.length)|0],o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain(),g2=c.createGain();
+  o.type="sine";o.frequency.value=mtof(m);o2.type="sine";o2.frequency.value=mtof(m)*2.005;g2.gain.value=0.22;
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.028,t+0.03);g.gain.exponentialRampToValueAtTime(0.0001,t+5);
+  o.connect(g);o2.connect(g2);g2.connect(g);let out=g;if(c.createStereoPanner){const pn=c.createStereoPanner();pn.pan.value=Math.random()*1.4-0.7;g.connect(pn);out=pn}
+  out.connect(MUS.rev);out.connect(MUS.dry);o.start(t);o2.start(t);o.stop(t+5.2);o2.stop(t+5.2)}
+function musTick(){const c=MUS.ctx;if(!c||!MUS.on)return;const now=c.currentTime;
+  if(MUS.nextChord<now)MUS.nextChord=now+0.1;if(MUS.nextBell<now)MUS.nextBell=now+1.5;
+  while(MUS.nextChord<now+1.2){musChord(MUS.nextChord);MUS.nextChord+=12.5}
+  while(MUS.nextBell<now+1.2){musBell(MUS.nextBell);MUS.nextBell+=2.8+Math.random()*5}}
+async function musSet(on,silent){const b=$("#musicBtn");
+  if(on){if(!MUS.ctx&&!musInit()){toast("В этом браузере музыка не поддерживается");return}
+    const c=MUS.ctx;try{await c.resume()}catch(e){}MUS.on=true;musTick();clearInterval(MUS.timer);MUS.timer=setInterval(musTick,400);
+    const now=c.currentTime,g=MUS.master.gain;g.cancelScheduledValues(now);g.setValueAtTime(Math.max(0.0001,g.value),now);g.linearRampToValueAtTime(0.55,now+4)}
+  else if(MUS.ctx){MUS.on=false;clearInterval(MUS.timer);const c=MUS.ctx,now=c.currentTime,g=MUS.master.gain;g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(0.0001,now+1.6);setTimeout(()=>{if(!MUS.on)c.suspend().catch(()=>{})},1800)}
+  if(!silent)store("neuroglobe.music",on?"1":"0");
+  b.setAttribute("aria-pressed",String(on));b.classList.toggle("on",on);b.dataset.tip=on?"Выключить музыку":"Включить музыку";b.setAttribute("aria-label",on?"Выключить музыку":"Включить музыку")}
+$("#musicBtn").onclick=()=>musSet(!MUS.on);
+document.addEventListener("visibilitychange",()=>{if(!MUS.ctx||!MUS.on)return;if(document.hidden)MUS.ctx.suspend().catch(()=>{});else MUS.ctx.resume().catch(()=>{})});
+if(store("neuroglobe.music")==="1"){const go=()=>{document.removeEventListener("pointerdown",go,true);if(!MUS.on)musSet(true,true)};document.addEventListener("pointerdown",go,true)}
+
+/* ---------- Подсказки по экрану ---------- */
+const TIPS=[
+ {sel:"#themeBtn",t:"Цвет темы",d:"Нажмите сюда, чтобы сменить цвет: фиолетовый, голубой, синий или нежно-розовый."},
+ {sel:"#musicBtn",t:"Музыка",d:"Включает спокойную космическую музыку. Надоест — нажмите ещё раз, и она стихнет."},
+ {sel:"globe",t:"Глобус",d:"Крутите его пальцем или мышью, приближайте двумя пальцами или колёсиком. Нажмите на точку, чтобы открыть книгу."},
+ {sel:"#tlBtn",t:"Таймлапс",d:"Покажет весь ваш путь чтения как короткое видео: книга за книгой."},
+ {sel:".seg",t:"Вкладки",d:"Здесь ваш тип мозга, карточка книги, челленджи, советы и добавление новых книг."}
+];
+const CO={i:-1};
+function coachStart(){if(TL.on||S.wrap)return;CO.i=0;coachShow()}
+function coachEnd(){CO.i=-1;$("#coach").hidden=true;$("#chole").hidden=true;store("neuroglobe.tips.v1","1")}
+function coachRect(tp){if(tp.sel==="globe"){const W=innerWidth,H=innerHeight,wide=W>=900,pw=wide?$("#panel").offsetWidth+32:0,sh=wide?0:$("#panel").offsetHeight+16;const cx=(W-pw)/2,cy=wide?H/2+20:(H-sh)/2+30,r=Math.min(150,Math.min(W-pw,H-sh)*0.3);return {left:cx-r,top:cy-r,width:r*2,height:r*2,round:true}}
+  const el=document.querySelector(tp.sel);if(!el)return null;const r=el.getBoundingClientRect();return {left:r.left-6,top:r.top-6,width:r.width+12,height:r.height+12}}
+function coachShow(){const tp=TIPS[CO.i];if(!tp){coachEnd();return}const r=coachRect(tp);if(!r){CO.i++;coachShow();return}
+  const h=$("#chole"),c=$("#coach");h.hidden=false;h.style.left=r.left+"px";h.style.top=r.top+"px";h.style.width=r.width+"px";h.style.height=r.height+"px";h.style.borderRadius=r.round?"50%":"18px";
+  const last=CO.i===TIPS.length-1;
+  c.innerHTML=`<div class="ct">${tp.t}</div><p>${tp.d}</p><div class="cn"><span class="cnum">${CO.i+1} из ${TIPS.length}</span><div class="row">${last?"":`<button class="btn sm ghost" data-cx>Пропустить</button>`}<button class="btn sm primary" data-cn>${last?"Понятно":"Дальше"}</button></div></div>`;c.hidden=false;
+  const W=innerWidth,H=innerHeight,cw=c.offsetWidth,ch=c.offsetHeight;let x=r.left+r.width/2-cw/2;x=Math.max(16,Math.min(x,W-cw-16));
+  let y=r.top+r.height+14;if(y+ch>H-16)y=r.top-ch-14;if(y<16)y=Math.max(16,Math.min(H-ch-16,r.top+r.height/2-ch/2));
+  c.style.transform=`translate(${x}px,${y}px)`;const b=c.querySelector("[data-cn]");if(b)b.focus()}
+$("#coach").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;if(t.hasAttribute("data-cx")){coachEnd();return}CO.i++;coachShow()});
+document.addEventListener("keydown",e=>{if(CO.i<0)return;if(e.key==="Escape"){coachEnd();e.stopPropagation()}else if(e.key==="ArrowRight"||e.key==="Enter"){}},true);
+window.addEventListener("resize",()=>{if(CO.i>=0)coachShow()});
 document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.confirmDel=false;renderPanel()});
 function setSheet(full){const p=$("#panel");p.classList.toggle("full",full);$("#grab").setAttribute("aria-label",full?"Свернуть панель":"Развернуть панель")}
 $("#grab").onclick=()=>setSheet(!$("#panel").classList.contains("full"));
@@ -1939,7 +2067,7 @@ function refresh(){
 const LOGO=`<svg width="34" height="34" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="8" fill="none" stroke="var(--accent)" stroke-width="1.6"/><ellipse cx="13" cy="13" rx="12" ry="4.5" fill="none" stroke="var(--accent-2)" stroke-width="1.2" transform="rotate(-24 13 13)" opacity=".85"/><circle cx="13" cy="13" r="2.6" fill="#fff"/></svg>`;
 const OB={step:null,g:0,note:""};
 function obOpen(step){OB.step=step;OB.note="";if(step==="guide")OB.g=0;document.body.classList.add("ob");S.pop=false;renderPop();obRender();$("#ob").hidden=false;setTimeout(()=>{const f=$("#ob [data-focus]");if(f)f.focus()},60)}
-function obClose(){$("#ob").hidden=true;document.body.classList.remove("ob");OB.step=null;store("neuroglobe.onboarded.v1","1")}
+function obClose(){$("#ob").hidden=true;document.body.classList.remove("ob");OB.step=null;store("neuroglobe.onboarded.v1","1");if(!store("neuroglobe.tips.v1"))setTimeout(coachStart,700)}
 const GUIDE=[
  {t:"Что это за приложение",ill:"globe",items:["Глобус — это схема мозга. Он поделён на семь зон: эмпатия, язык, воображение, логика, самоконтроль, эмоции, память.","Каждая книга, которую вы отметили, становится точкой. Точка встаёт ближе к тем зонам, которые книга тренирует сильнее всего.","Чем больше книг отметите, тем точнее картина и советы."]},
  {t:"Как добавить книгу",ill:"add",items:["Откройте вкладку «Добавить» и найдите книгу по названию или автору. В каталоге больше "+(Math.floor(CATALOG.length/100)*100)+" книг.","Сверху выберите, прочитана книга, вы читаете её сейчас или только собираетесь.","Если нужной книги нет, внизу можно добавить свою: название, автор и жанр."]},
@@ -1971,7 +2099,7 @@ function obRender(){const el=$("#ob");
  if(OB.step==="guide"){el.className="ob modal";const g=GUIDE[OB.g],last=OB.g===GUIDE.length-1;
   el.innerHTML=`<div class="guide glass" role="dialog" aria-label="Инструкция"><button class="x2" data-ob="close" aria-label="Закрыть инструкцию">×</button><div class="gill" aria-hidden="true">${gIll(g.ill)}</div>
    <div><div class="gstep">Шаг ${OB.g+1} из ${GUIDE.length}</div><h2>${g.t}</h2></div><ul>${g.items.map(x=>`<li><span>${x}</span></li>`).join("")}</ul>
-   <div class="gnav"><div class="gdots">${GUIDE.map((_,i)=>`<i class="${i===OB.g?"on":""}"></i>`).join("")}</div><div class="row">${OB.g?`<button class="btn ghost" data-ob="prev">Назад</button>`:`<button class="btn ghost" data-ob="close">Пропустить</button>`}<button class="btn primary" data-ob="${last?"close":"next"}" data-focus>${last?"Открыть мой глобус":"Далее"}</button></div></div></div>`}}
+   ${last?`<button class="btn sm ghost" data-ob="tips" style="align-self:flex-start">Показать подсказки на экране</button>`:""}<div class="gnav"><div class="gdots">${GUIDE.map((_,i)=>`<i class="${i===OB.g?"on":""}"></i>`).join("")}</div><div class="row">${OB.g?`<button class="btn ghost" data-ob="prev">Назад</button>`:`<button class="btn ghost" data-ob="close">Пропустить</button>`}<button class="btn primary" data-ob="${last?"close":"next"}" data-focus>${last?"Открыть мой глобус":"Далее"}</button></div></div></div>`}}
 $("#ob").addEventListener("click",e=>{const t=e.target.closest("button");if(!t){if(e.target.id==="ob"&&OB.step!=="intro")obClose();return}
  const a=t.dataset.ob;
  if(a==="export"){exportData();return}
@@ -1980,6 +2108,7 @@ $("#ob").addEventListener("click",e=>{const t=e.target.closest("button");if(!t){
  if(a==="enter"){if(store("neuroglobe.onboarded.v1"))obClose();else obOpen("guide");return}
  if(a==="next"){OB.g=Math.min(GUIDE.length-1,OB.g+1);obRender();return}
  if(a==="prev"){OB.g=Math.max(0,OB.g-1);obRender();return}
+ if(a==="tips"){obClose();setTimeout(coachStart,500);return}
  if(a==="close"){obClose()}});
 $("#helpBtn").onclick=()=>obOpen("guide");
 $("#acctBtn").onclick=()=>obOpen("login");
@@ -2002,7 +2131,7 @@ document.addEventListener("keydown",e=>{if(OB.step&&OB.step!=="intro"){if(e.key=
 
 applyPalette(store("neuroglobe.palette")||"violet");
 renderDoms();refresh();
-if(!store("neuroglobe.onboarded.v1"))obOpen("intro");
+if(!store("neuroglobe.onboarded.v1"))obOpen("intro");else if(!store("neuroglobe.tips.v1"))setTimeout(coachStart,1200);
 initStorage().catch(()=>setWho("Сохранение в этом браузере","warn"));
 })();
 </script>
