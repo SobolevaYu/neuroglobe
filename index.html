@@ -28,6 +28,8 @@
 :root[data-palette="rose"]{--bg:#16070f;--glass:rgba(58,20,40,.48);--glass-strong:rgba(40,13,28,.74);--text:#fff1f6;--muted:#d0a5b8;--accent:#ffb3cf;--accent-2:#ffd9e8;--glow:rgba(255,150,198,.5);--on-accent:#3d0c22}
 :root[data-palette="blue"]{--bg:#030818;--glass:rgba(14,26,62,.52);--glass-strong:rgba(9,18,46,.76);--text:#eaf0ff;--muted:#98a6d2;--accent:#7ea6ff;--accent-2:#9b8cff;--glow:rgba(88,128,255,.58);--on-accent:#06102e}
 html,body{height:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+#scene,#labels,.hud,.bar,.doms,.zoom,.tip,.seg,.grab,.tslide,.burst,.pop .x{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));transition:background .6s}
 *{box-sizing:border-box}
 button,input,select{font:inherit;color:inherit}
@@ -314,10 +316,39 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
 .coach .cn{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
 .coach .cnum{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .guide .x2{top:34px;right:34px;background:color-mix(in srgb,var(--bg) 60%,transparent)}
+.hudrow{display:flex;flex-direction:column;gap:6px}
+.hudbtns{display:flex;flex-direction:column;gap:8px;margin-top:8px;pointer-events:auto;align-items:flex-start}
+.hudbtns .play{margin-top:0}
+.tslide{position:fixed;z-index:3;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(62px + env(safe-area-inset-bottom,0px));width:min(420px,calc(100vw - var(--panel-w) - 130px));height:44px;border-radius:999px;display:flex;align-items:center;gap:10px;padding:0 6px 0 14px;color:var(--accent)}
+.tslide input{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--pct,100%),rgba(255,255,255,.14) var(--pct,100%));outline:none}
+.tslide input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 40%,transparent),0 0 14px var(--glow);cursor:grab}
+.tslide input::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 40%,transparent),0 0 14px var(--glow)}
+.tlbl{flex:none;min-width:84px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--stroke);background:rgba(0,0,0,.2);font-size:12px;font-weight:600;color:var(--text);cursor:pointer;white-space:nowrap}
+.tslide.past .tlbl{border-color:var(--accent);color:var(--accent)}
+.burst{position:fixed;z-index:6;left:0;top:0;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:700;font-size:15px;text-shadow:0 0 16px currentColor,0 2px 8px rgba(0,0,0,.7);will-change:transform,opacity}
+.burst span{white-space:nowrap}
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--accent);font-weight:600;font-size:13.5px;cursor:pointer;padding:0;align-self:flex-start}
+.pick{width:min(860px,100%);border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;background-color:var(--glass-strong);max-height:calc(100dvh - 40px)}
+.pick h2{margin:0;font-size:28px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;overflow-y:auto;min-height:0;padding:2px;margin:0 -2px}
+.pcard{position:relative;min-height:112px;border-radius:16px;padding:14px 14px 12px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;text-align:left;cursor:pointer;border:1px solid var(--stroke);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 30%,transparent),rgba(255,255,255,.03) 70%);transition:transform .15s,border-color .2s,box-shadow .2s}
+.pcard:active{transform:scale(.97)}
+.pcard b{font-family:var(--f-display);font-weight:400;font-size:15.5px;line-height:1.25;padding-right:26px}
+.pcard span{font-size:12px;color:var(--muted)}
+.pcard .ck{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--stroke-2);display:grid;place-items:center;font-size:13px;color:transparent;transition:all .2s}
+.pcard[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 0 26px -8px var(--c)}
+.pcard[aria-pressed="true"] .ck{background:var(--c);border-color:var(--c);color:#14081f}
+.pfoot{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.pfoot .btn.primary{flex:1;max-width:320px}
+.sharein{width:min(520px,100%);align-items:stretch}
+.sharein img{display:block;width:100%;max-height:62dvh;object-fit:contain;border-radius:18px;border:1px solid var(--stroke)}
+.typec .ta{font-size:14.5px;line-height:1.6}
+.mfilter{display:flex;gap:6px;flex-wrap:wrap}
+.grp{display:flex;flex-direction:column;gap:2px}
 .nogl{position:fixed;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted);padding:40px;pointer-events:none}
 
 @media (max-width:899px){
-  :root{--sheet:46%}
+  :root{--sheet:max(260px,36%)}
   .hbtn{width:36px;height:36px}
   .bar{gap:8px}
   .hbtn.theme{width:36px;padding:0;justify-content:center}.hbtn.theme .lbl{display:none}.hbtn.theme .sw{width:22px;height:22px}
@@ -326,17 +357,44 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
   .bar{height:54px;padding:0 8px 0 14px}
   .brand{font-size:16px}.brand small{display:none}
   .acct{max-width:44px;padding:0 12px}.acct b{display:none}
-  .hud{top:calc(80px + env(safe-area-inset-top,0px));left:max(18px,env(safe-area-inset-left,0px));max-width:70vw}
-  .hud .big{font-size:42px}
+  body{font-size:14px}
+  .hud{top:calc(74px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));max-width:none;gap:4px}
+  .hud .eyebrow{font-size:9.5px;letter-spacing:.14em}
+  .hudrow{flex-direction:row;align-items:center;gap:10px}
+  .hud .big{font-size:30px}
+  .hud .sub{font-size:12.5px;line-height:1.35}
+  .hud .sub .more{display:none}
+  .hudbtns{position:absolute;top:0;right:0;margin:0;flex-direction:row;gap:6px}
+  .hudbtns .play{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%}
+  .hudbtns .play span{display:none}
+  .rl{font-size:8.5px;letter-spacing:.1em;gap:5px}.rl.on{font-size:9.5px}.rl i{width:5px;height:5px}
+  .tslide{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));width:auto;bottom:calc(var(--sheetpx,300px) + 20px + env(safe-area-inset-bottom,0px));height:40px}
+  .tlbl{min-width:0;font-size:11.5px;padding:0 10px}
+  .toast{bottom:calc(var(--sheetpx,300px) + 24px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);text-align:center}
+  h2{font-size:20px}h2.disp{font-size:21px}
+  .eyebrow{font-size:9.5px;letter-spacing:.14em}
+  .sub{font-size:13.5px}
+  .pane{gap:16px}
+  .card{padding:14px}
+  .dom{padding:11px 0}.dom .tx{font-size:12.5px}.dom .nm{font-size:14px}
+  .item{padding:10px 6px}.item .t{font-size:14px}.item .a{font-size:12px}
+  .tname{font-size:22px}.typec .ta{font-size:13.5px}.tgrid p{font-size:12.5px}
+  .rec .t{font-size:15.5px}.rec .why{font-size:13px}
+  .btn{height:40px;font-size:13.5px}.btn.lg{height:48px;font-size:15px}
+  .field input,.field select{height:44px;font-size:16px}
+  textarea.ta{font-size:16px}
+  .pop{padding:14px 14px 12px;gap:9px;border-radius:18px}.pop h3{font-size:16px}.pop .blk p{font-size:13px}.pop .au{font-size:12px}
+  .pick{padding:18px;border-radius:24px}.pick h2{font-size:22px}.pgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pcard{min-height:96px;padding:12px}.pcard b{font-size:14px}
+  .ob .lead{font-size:14.5px}.ob h1{font-size:32px}
   .doms,.zoom{display:none}
   .panel{top:auto;left:max(8px,env(safe-area-inset-left,0px));right:max(8px,env(safe-area-inset-right,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:auto;height:var(--sheet);transition:height .45s cubic-bezier(.2,.8,.2,1)}
   .panel.full{height:calc(100% - 84px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
-  .grab{display:flex;justify-content:center;align-items:center;height:22px;border:0;background:none;cursor:pointer;padding-top:8px}
+  .grab{display:flex;justify-content:center;align-items:center;height:26px;border:0;background:none;cursor:grab;padding-top:8px;touch-action:none;width:100%}
   .grab i{width:44px;height:5px;border-radius:3px;background:var(--stroke-2)}
   .seg{margin-top:6px}
   .pane{padding:18px 18px 24px}
 }
-@media (max-width:899px) and (orientation:landscape) and (max-height:520px){.hud{display:none}}
+@media (max-width:899px) and (orientation:landscape) and (max-height:520px){.hud,.tslide{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -365,11 +423,14 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
 
 <section class="hud" aria-live="polite">
   <div class="eyebrow" id="hudEye">Ваш нейроглобус</div>
-  <div class="big" id="hudN">0</div>
-  <div class="sub" id="hudSub"></div>
-  <button class="play glass" id="tlBtn"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.8v10.4L12 7z" fill="currentColor"/></svg>Нейро-таймлапс</button>
-  <button class="play glass" id="wrapBtn" style="margin-top:0"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 12h10M3.5 12V7M7 12V3M10.5 12V5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>Итоги месяца и года</button>
+  <div class="hudrow"><div class="big" id="hudN">0</div><div class="sub" id="hudSub"></div></div>
+  <div class="hudbtns">
+    <button class="play glass" id="tlBtn" aria-label="Нейро-таймлапс"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.8v10.4L12 7z" fill="currentColor"/></svg><span>Нейро-таймлапс</span></button>
+    <button class="play glass" id="wrapBtn" aria-label="Итоги месяца и года"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 12h10M3.5 12V7M7 12V3M10.5 12V5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg><span>Итоги</span></button>
+  </div>
 </section>
+<div class="tslide glass" id="tslide" hidden><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.6V8l2.4 1.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input type="range" id="tRange" min="0" max="1000" value="1000" aria-label="Глобус на дату"><button class="tlbl" id="tLbl">Сейчас</button></div>
+<div class="burst" id="burst" hidden></div>
 
 <div class="doms" id="doms"></div>
 <div class="zoom"><button class="glass" id="zin" aria-label="Приблизить">+</button><button class="glass" id="zout" aria-label="Отдалить">−</button></div>
@@ -379,11 +440,9 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
 <aside class="panel glass" id="panel">
   <button class="grab" id="grab" aria-label="Развернуть панель"><i></i></button>
   <nav class="seg" role="tablist">
-    <button role="tab" data-tab="brain" aria-selected="true">Мозг</button>
-    <button role="tab" data-tab="book" aria-selected="false">Книга</button>
+    <button role="tab" data-tab="brain" aria-selected="true">Мой мозг</button>
+    <button role="tab" data-tab="books" aria-selected="false">Книги</button>
     <button role="tab" data-tab="ch" aria-selected="false">Челленджи</button>
-    <button role="tab" data-tab="recs" aria-selected="false">Советы</button>
-    <button role="tab" data-tab="add" aria-selected="false">Добавить</button>
   </nav>
   <div class="pane" id="pane"></div>
 </aside>
@@ -391,6 +450,7 @@ body.ob .bar,body.ob .hud,body.ob .panel,body.ob .doms,body.ob .zoom,body.ob #la
 <section class="tlbar glass" id="tlbar" hidden aria-live="polite"></section>
 <div class="wrap" id="wrap" hidden role="dialog" aria-modal="true" aria-label="Итоги чтения"><div class="wrapin glass" id="wrapin"></div></div>
 <div class="ob" id="ob" hidden></div>
+<div class="wrap" id="share" hidden role="dialog" aria-modal="true" aria-label="Поделиться"><div class="wrapin glass sharein" id="sharein"></div></div>
 <div class="chole" id="chole" hidden></div><div class="coach glass" id="coach" hidden role="dialog" aria-live="polite"></div>
 <input type="file" id="importIn" accept="application/json,.json" hidden>
 
@@ -1366,7 +1426,8 @@ const PAL={
 };
 
 /* ================= Состояние и утилиты ================= */
-const S={addStatus:"read",wrap:null,dl:null,pop:false,ch:[],qdraft:{},books:[],mode:"loading",selected:null,hover:null,focus:-1,tab:"brain",db:null,uid:null,col:null,sample:null,confirmDel:false,aiRecs:null,aiBusy:false,query:"",pendingFocus:null,palette:"violet"};
+const S={sub:"list",mf:"all",mq:"",timeAt:null,growId:null,burst:null,addStatus:"read",wrap:null,dl:null,pop:false,ch:[],qdraft:{},books:[],mode:"loading",selected:null,hover:null,focus:-1,tab:"brain",db:null,uid:null,col:null,sample:null,confirmDel:false,aiRecs:null,aiBusy:false,query:"",pendingFocus:null,palette:"violet"};
+const GLX={};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const unit=w=>{const s=Math.hypot(...w)||1;return w.map(x=>x/s)};
@@ -1411,7 +1472,7 @@ async function addBook(src,status){status=status||S.addStatus||"read";
   const title=src.title.trim();
   if(S.books.some(b=>b.title.toLowerCase()===title.toLowerCase())){toast("Эта книга уже на глобусе");return}
   const b={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title,author:src.author||"",w:src.w.map(x=>Math.max(0,Math.min(9,Math.round(+x||0)))),rating:0,ts:Date.now(),status,startedAt:status==="reading"?Date.now():null,cid:src.cid||null,note:src.note||src.desc||""};
-  S.selected=b.id;S.tab="book";S.confirmDel=false;S.pendingFocus=b.id;
+  S.selected=b.id;S.tab="books";S.sub="book";S.confirmDel=false;S.pendingFocus=b.id;S.growId=b.id;
   try{await saveBook(b)}catch(e){toast("Не удалось сохранить. Проверьте соединение");return}
   if(S.mode==="cloud")renderPanel();
   setSheet(false);toast(status==="read"?"«"+title+"» на глобусе":status==="reading"?"«"+title+"» — читаю сейчас":"«"+title+"» в списке «Хочу прочитать»");
@@ -1469,8 +1530,9 @@ function brainType(books){const read=books.filter(isRead);if(read.length<2)retur
   const weak=sc.indexOf(Math.min(...sc));return {t:best,match:Math.round(Math.max(0,bs)*100),weak,balance:Math.round(H*100)}}
 function typeCard(bt,compact){if(!bt)return `<div class="card"><p class="eyebrow">Тип мозга</p><p class="sub" style="margin-top:6px">Добавьте хотя бы две прочитанные книги, и появится ваш читательский тип.</p></div>`;
   const t=bt.t,w=D[bt.weak];
-  return `<div class="card typec"><p class="eyebrow">Ваш тип мозга · ${t.en}</p><div class="tname">${t.name}</div><p class="tnet">${t.nets}</p><p style="font-size:14.5px;line-height:1.6">${t.about}</p>
+  return `<div class="card typec"><p class="eyebrow">Ваш тип мозга · ${t.en}</p><div class="tname">${t.name}</div><p class="tnet">${t.nets}</p><p class="ta">${t.about}</p>
   <div class="tgrid"><div><b>Сильная сторона</b><p>${t.strong}</p></div><div><b>Зона роста</b><p style="color:${w.color}">${w.name}: ${w.skill.toLowerCase()}</p></div></div>
+  ${compact||isDemo()?"":`<div><button class="btn sm" data-share="type"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5v8M3.8 4.6 7 1.5l3.2 3.1M2.5 8v4h9V8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Поделиться типом</button></div>`}
   ${compact?"":`<details class="sci"><summary>Научная основа</summary><ul>${t.sci.map(k=>`<li><span>${SCI[k][1][0].toUpperCase()+SCI[k][1].slice(1)}.</span><cite>${SCI[k][0]}</cite></li>`).join("")}</ul><p class="sub" style="font-size:12.5px">Научно подтверждённых «типов мозга» у людей нет: мозг каждого работает как набор взаимодействующих сетей. Ваш тип описывает, какие сети чаще всего нагружают ваши книги. Эффекты чтения на мозг реальны, но умеренные, и часть громких исследований не воспроизвелась.</p></details>`}</div>`}
 
 /* ================= Аналитика ================= */
@@ -1603,7 +1665,7 @@ function initGlobe(){
   const arcF=`uniform vec3 uColor;uniform float uTime;uniform float uOff;uniform float uReveal;uniform float uHi;uniform float uDim;varying float vU;
     void main(){if(vU>uReveal)discard;float h=fract(uTime*0.18+uOff);float d=h-vU;if(d<0.)d+=1.;float p=smoothstep(0.22,0.,d);
       float a=(0.28+0.5*uHi+p*0.9)*uDim;gl_FragColor=vec4(uColor*(0.9+p*1.6+uHi*0.6),a);}`;
-  function build(books,demo,opt){opt=opt||{};const lastId=opt.grow&&books.length?books[books.length-1].id:null;
+  function build(books,demo,opt){opt=opt||{};const growMode=!!(opt.grow||opt.lastId);const lastId=opt.lastId||(opt.grow&&books.length?books[books.length-1].id:null);
     world.remove(layer);layer.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&o.material.dispose)o.material.dispose()});
     layer=new THREE.Group();world.add(layer);pick=[];arcs=[];nodes={};
     books.forEach(b=>{const p=bookPos(b);posById[b.id]=p;const di=top(b.w,1)[0];const col=domCols[di].clone();
@@ -1618,8 +1680,8 @@ function initGlobe(){
       const curve=new THREE.CatmullRomCurve3(pts);
       const m=new THREE.ShaderMaterial({uniforms:{uColor:{value:new THREE.Color(l.type==="path"?PAL[S.palette].path:"#9aa6d8")},uTime:U.uTime,uOff:{value:Math.random()},uReveal:{value:reduce?1.01:0},uHi:{value:0},uDim:{value:l.type==="path"?(demo?0.6:1):0.45}},vertexShader:arcV,fragmentShader:arcF,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
       layer.add(new THREE.Mesh(new THREE.TubeGeometry(curve,64,l.type==="path"?0.0034:0.0016,6,false),m));
-      const fresh=lastId&&(l.a===lastId||l.b===lastId);arcs.push({m,a:l.a,b:l.b,type:l.type,start:opt.grow?(fresh?(l.type==="path"?0:0.5):-10):(l.type==="path"?(l.i-1)/nPath*1.2:1.3)});});
-    arcT=opt.grow?0.3:(built?99:0);built=true;
+      const fresh=lastId&&(l.a===lastId||l.b===lastId);arcs.push({m,a:l.a,b:l.b,type:l.type,start:growMode?(fresh?(l.type==="path"?0:0.5):-10):(l.type==="path"?(l.i-1)/nPath*1.2:1.3)});});
+    arcT=growMode?0.3:(built?99:0);built=true;
   }
   let arcT=0,built=false;
 
@@ -1661,7 +1723,7 @@ function initGlobe(){
 
   // компоновка: сдвиг глобуса от панели
   const panel=$("#panel");
-  function resize(){const w=window.innerWidth,h=window.innerHeight;renderer.setSize(w,h,false);if(composer){composer.setSize(w,h)}
+  function resize(){const w=window.innerWidth,h=window.innerHeight;document.documentElement.style.setProperty("--sheetpx",panel.offsetHeight+"px");renderer.setSize(w,h,false);if(composer){composer.setSize(w,h)}
     const wide=w>=900;let ox=0,oy=0,aw=w,ah=h-90;
     const tl=document.body.classList.contains("tl");
     if(tl){const bh=($("#tlbar").offsetHeight||170)+24;oy=bh/2-20;ah=h-bh-90}
@@ -1685,6 +1747,8 @@ function initGlobe(){
     world.quaternion.copy(rotQ);stars.rotation.y+=dt*0.004;if(!reduce)flares.forEach(f=>{const q=f.userData.k*(0.8+0.25*Math.sin(t/1000*f.userData.sp+f.userData.ph));f.scale.set(q,q,1)});
     zoom+=(zoomT-zoom)*(1-Math.exp(-dt*7));const want=baseDist/zoom;dist+=(want-dist)*Math.min(1,dt*(reduce?20:3));camera.position.set(0,0,dist);
     const sel=S.selected&&posById[S.selected]&&nodes[S.selected];ring.visible=!!sel;if(sel){ring.position.copy(posById[S.selected]).multiplyScalar(1.01);const s=0.13+(reduce?0:Math.sin(t/320)*0.015);ring.scale.set(s,s,1)}
+    if(GLX.shockStep)GLX.shockStep(dt);
+    if(S.burst&&posById[S.burst.id]){const el=performance.now()-S.burst.t0;if(el>2400){S.burst=null;placeBurst(0,0,-1,0)}else{tmp.copy(posById[S.burst.id]).applyQuaternion(rotQ);const f=-tmp.clone().sub(camera.position).normalize().dot(tmp.clone().normalize());tmp.project(camera);placeBurst((tmp.x+1)/2*window.innerWidth,(1-tmp.y)/2*window.innerHeight,f,Math.max(0,el)/2400)}}
     if(useBloom)composer.render();else renderer.render(scene,camera);
     // адаптация качества, как у глобуса GitHub: при низком FPS отключаем свечение
     if(frames<150){frames++;if(dt>1/38)slow++;if(frames===150&&slow>75){if(useBloom){useBloom=false}else{pr=1;renderer.setPixelRatio(1);U.uPR.value=1}}}
@@ -1695,7 +1759,11 @@ function initGlobe(){
       el.style.opacity=Math.min(1,(facing-0.25)*2.4)*(S.focus>-1&&S.focus!==i?0.35:1)});
     requestAnimationFrame(loop)}
   requestAnimationFrame(loop);
-  return {build,palette,focusBook,focusDomain,setFocus:i=>{U.uFocus.value=i},setLit:a=>{U.uLit.value=a},resize,hasPos:id=>!!posById[id]};
+  const shock=new THREE.Sprite(new THREE.SpriteMaterial({map:ringTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));shock.visible=false;world.add(shock);let shockT=-1;
+  function burst(id){const p=posById[id];if(!p)return;shock.position.copy(p).multiplyScalar(1.01);shock.material.color.set(PAL[S.palette].path);shockT=reduce?-1:0;focusBook(id)}
+  function snapshot(){camera.clearViewOffset();camera.updateProjectionMatrix();if(useBloom)composer.render();else renderer.render(scene,camera);const url=renderer.domElement.toDataURL("image/png");resize();return url}
+  GLX.shockStep=dt=>{if(shockT<0){shock.visible=false;return}shockT+=dt;const k=Math.min(1,shockT/1.3);shock.visible=k<1;const sc=0.06+k*0.5;shock.scale.set(sc,sc,1);shock.material.opacity=(1-k)*0.9;if(k>=1)shockT=-1};
+  return {build,palette,focusBook,focusDomain,burst,snapshot,setFocus:i=>{U.uFocus.value=i},setLit:a=>{U.uLit.value=a},resize,hasPos:id=>!!posById[id]};
 }
 
 /* ================= Интерфейс ================= */
@@ -1748,7 +1816,8 @@ const TIPS=[
  {sel:"#musicBtn",t:"Музыка",d:"Включает спокойную космическую музыку. Надоест — нажмите ещё раз, и она стихнет."},
  {sel:"globe",t:"Глобус",d:"Крутите его пальцем или мышью, приближайте двумя пальцами или колёсиком. Нажмите на точку, чтобы открыть книгу."},
  {sel:"#tlBtn",t:"Таймлапс",d:"Покажет весь ваш путь чтения как короткое видео: книга за книгой."},
- {sel:".seg",t:"Вкладки",d:"Здесь ваш тип мозга, карточка книги, челленджи, советы и добавление новых книг."}
+ {sel:".seg",t:"Три вкладки",d:"«Мой мозг» — ваш тип и советы. «Книги» — ваша полка и добавление новых. «Челленджи» — задания, которые зажигают зоны глобуса."},
+ {sel:"#tslide",t:"Машина времени",d:"Потяните ползунок назад, и глобус покажет, каким был ваш мозг месяц или год назад."}
 ];
 const CO={i:-1};
 function coachStart(){if(TL.on||S.wrap)return;CO.i=0;coachShow()}
@@ -1765,12 +1834,12 @@ function coachShow(){const tp=TIPS[CO.i];if(!tp){coachEnd();return}const r=coach
 $("#coach").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;if(t.hasAttribute("data-cx")){coachEnd();return}CO.i++;coachShow()});
 document.addEventListener("keydown",e=>{if(CO.i<0)return;if(e.key==="Escape"){coachEnd();e.stopPropagation()}else if(e.key==="ArrowRight"||e.key==="Enter"){}},true);
 window.addEventListener("resize",()=>{if(CO.i>=0)coachShow()});
-document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.confirmDel=false;renderPanel()});
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{if(S.tab===b.dataset.tab&&b.dataset.tab==="books")S.sub="list";S.tab=b.dataset.tab;S.confirmDel=false;renderPanel()});
 function setSheet(full){const p=$("#panel");p.classList.toggle("full",full);$("#grab").setAttribute("aria-label",full?"Свернуть панель":"Развернуть панель")}
 $("#grab").onclick=()=>setSheet(!$("#panel").classList.contains("full"));
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(S.wrap){closeWrap();return}if(TL.on){tlStop();return}if(S.pop){S.pop=false;renderPop()}else if(S.focus>-1)setFocus(-1);else if(S.selected){S.selected=null;renderPanel()}}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!$("#share").hidden){$("#share").hidden=true;return}if(S.wrap){closeWrap();return}if(TL.on){tlStop();return}if(S.pop){S.pop=false;renderPop()}else if(S.focus>-1)setFocus(-1);else if(S.selected){S.selected=null;renderPanel()}}});
 
-function select(id){S.selected=id;S.pop=true;S.tab="book";S.confirmDel=false;if(GL)GL.focusBook(id);renderPanel();renderPop()}
+function select(id){S.selected=id;S.pop=true;S.tab="books";S.sub="book";S.confirmDel=false;if(GL)GL.focusBook(id);renderPanel();renderPop()}
 function renderPop(){const el=$("#pop"),b=visible().find(x=>x.id===S.selected);if(!b||!S.pop||TL.on){el.hidden=true;return}
   const t=top(b.w,3),m=D[t[0]];
   el.innerHTML=`<button class="x" data-popx aria-label="Закрыть">×</button><div><p class="eyebrow" style="color:${m.color}">${b.demo?'<span class="tag">Пример</span>':""}Главное: ${m.name}${(b.status||"read")!=="read"?` <span class="st ${b.status}">${STATUS[b.status]}</span>`:""}</p><h3>${esc(b.title)}</h3><div class="au">${esc(b.author)}</div></div>
@@ -1789,7 +1858,7 @@ function placePop(x,y,f){const el=$("#pop");if(el.hidden)return;
   el.style.transform=`translate(${lx}px,${ty}px)`;el.style.opacity=Math.min(1,(f-0.08)*4);el.style.pointerEvents="auto"}
 $("#pop").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
   if(t.hasAttribute("data-popx")){S.pop=false;renderPop();return}
-  if(t.hasAttribute("data-popmore")){S.pop=false;renderPop();S.tab="book";renderPanel();if(window.innerWidth<900)setSheet(true)}});
+  if(t.hasAttribute("data-popmore")){S.pop=false;renderPop();S.tab="books";S.sub="book";renderPanel();if(window.innerWidth<900)setSheet(true)}});
 function setFocus(i){S.focus=S.focus===i?-1:i;if(GL){GL.setFocus(S.focus);GL.focusDomain(S.focus)}renderDoms()}
 function chip(i){return `<span class="chip"><i style="background:${D[i].color};color:${D[i].color}"></i>${D[i].name}</span>`}
 function renderDoms(){$("#doms").innerHTML=D.map((d,i)=>`<button class="dch glass" data-dom="${i}" aria-pressed="${S.focus===i}"><i style="background:${d.color};color:${d.color}"></i>${d.name}</button>`).join("")}
@@ -1828,10 +1897,11 @@ function paneBrain(){
 }
 function paneBook(){
   const bs=visible(),b=bs.find(x=>x.id===S.selected);
-  if(!b)return `<div><p class="eyebrow">Книга</p><h2>Выберите точку на глобусе</h2></div><p class="sub">Каждая светящаяся точка — прочитанная книга. Нажмите на неё, чтобы увидеть, какие области мозга она тренирует и с чем связана.</p><div class="list">${bs.slice(-5).reverse().map(x=>`<button class="item" data-sel="${x.id}"><span class="n"><i style="background:${D[top(x.w,1)[0]].color};color:${D[top(x.w,1)[0]].color}"></i></span><span class="t">${esc(x.title)}</span><span class="s"></span><span class="a">${esc(x.author)}</span></button>`).join("")}</div>`;
+  if(!b){S.sub="list";return paneBooks()}
+  if(false)return `<div><p class="eyebrow">Книга</p><h2>Выберите точку на глобусе</h2></div><p class="sub">Каждая светящаяся точка — прочитанная книга. Нажмите на неё, чтобы увидеть, какие области мозга она тренирует и с чем связана.</p><div class="list">${bs.slice(-5).reverse().map(x=>`<button class="item" data-sel="${x.id}"><span class="n"><i style="background:${D[top(x.w,1)[0]].color};color:${D[top(x.w,1)[0]].color}"></i></span><span class="t">${esc(x.title)}</span><span class="s"></span><span class="a">${esc(x.author)}</span></button>`).join("")}</div>`;
   const t=top(b.w,3),main=D[t[0]];
   const rel=links(bs).filter(l=>l.a===b.id||l.b===b.id).map(l=>({o:bs.find(x=>x.id===(l.a===b.id?l.b:l.a)),type:l.type})).filter(x=>x.o);
-  let h=`<div><p class="eyebrow">${b.demo?'<span class="tag">Пример</span>':""}${new Date(b.ts).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"})}</p><h2 class="disp">${esc(b.title)}</h2><p class="sub" style="margin-top:6px">${esc(b.author)}</p></div>`;
+  let h=`<button class="back" data-back>← Все книги</button><div><p class="eyebrow">${b.demo?'<span class="tag">Пример</span>':""}${new Date(b.ts).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"})}</p><h2 class="disp">${esc(b.title)}</h2><p class="sub" style="margin-top:6px">${esc(b.author)}</p></div>`;
   h+=b.demo?`<div><span class="st ${b.status||"read"}">${STATUS[b.status||"read"]}</span></div>`:`<div class="segs" role="group" aria-label="Статус">${Object.entries(STATUS).map(([k,v])=>`<button data-status="${k}" aria-pressed="${(b.status||"read")===k}">${v}</button>`).join("")}</div>`;
   if(!b.demo&&isRead(b))h+=`<div class="row" style="justify-content:space-between"><span class="sub">Ваша оценка</span><div class="stars">${[1,2,3,4,5].map(n=>`<button data-rate="${n}" class="${n<=b.rating?"on":""}" aria-label="${n} из 5">★</button>`).join("")}</div></div>`;
   h+=`<div class="chips">${t.map(chip).join("")}</div>`;
@@ -1891,13 +1961,13 @@ function chCancel(id){S.ch=S.ch.filter(x=>x.id!==id||x.done);saveCh();renderPane
 /* ---------- Нейро-таймлапс ---------- */
 const TL={on:false,i:0,timer:0,list:[],paused:false,done:false,prevSel:null};
 const TLMS=matchMedia("(prefers-reduced-motion: reduce)").matches?3400:2500;
-function tlStart(){const list=[...visible()].filter(isRead).sort((a,b)=>a.ts-b.ts);if(list.length<2){toast("Для таймлапса нужны хотя бы две книги");return}
+function tlStart(){S.timeAt=null;const list=[...visible()].filter(isRead).sort((a,b)=>a.ts-b.ts);if(list.length<2){toast("Для таймлапса нужны хотя бы две книги");return}
   clearTimeout(TL.timer);Object.assign(TL,{on:true,i:0,list,paused:false,done:false,prevSel:TL.on?TL.prevSel:S.selected});
-  S.pop=false;renderPop();if(S.focus>-1)setFocus(-1);document.body.classList.add("tl");$("#tlbar").hidden=false;tlStep();if(GL)GL.resize()}
+  S.pop=false;renderPop();if(S.focus>-1)setFocus(-1);document.body.classList.add("tl");$("#tslide").hidden=true;$("#tlbar").hidden=false;tlStep();if(GL)GL.resize()}
 function tlStep(){if(!TL.on||TL.paused)return;const sub=TL.list.slice(0,TL.i+1),cur=sub[sub.length-1];S.selected=cur.id;
   if(GL){GL.build(sub,isDemo(),{grow:true});GL.focusBook(cur.id)}TL.i++;tlBar();clearTimeout(TL.timer);
   TL.timer=setTimeout(()=>{if(TL.i<TL.list.length)tlStep();else{TL.done=true;tlBar()}},TLMS)}
-function tlStop(){TL.on=false;clearTimeout(TL.timer);document.body.classList.remove("tl");$("#tlbar").hidden=true;S.selected=TL.prevSel;refresh();if(GL)GL.resize()}
+function tlStop(){TL.on=false;$("#tslide").hidden=false;clearTimeout(TL.timer);document.body.classList.remove("tl");$("#tlbar").hidden=true;S.selected=TL.prevSel;refresh();if(GL)GL.resize()}
 function tlBar(){const el=$("#tlbar"),n=TL.list.length;
   if(TL.done){const sc=brainScores(TL.list),t2=top(sc,2),days=Math.max(1,Math.round((TL.list[n-1].ts-TL.list[0].ts)/864e5));
     el.innerHTML=`<div class="main"><span class="step">ПУТЬ ПРОЙДЕН · ${n} ${plural(n,"КНИГА","КНИГИ","КНИГ")} · ${days} ${plural(days,"ДЕНЬ","ДНЯ","ДНЕЙ")}</span><div class="t">Сильнее всего выросли ${D[t2[0]].name.toLowerCase()} и ${D[t2[1]].name.toLowerCase()}</div><div class="a">${TL.list.filter(b=>b.quote).length?TL.list.filter(b=>b.quote).length+" "+plural(TL.list.filter(b=>b.quote).length,"якорь","якоря","якорей")+" на пути. ":""}Каждая новая книга сдвигала профиль, и глобус показывает итог.</div></div>${radar(sc,"t")}<div class="prog"><i style="width:100%"></i></div><div class="ctl"><button class="btn sm primary" data-tlre>Смотреть снова</button><button class="btn sm ghost" data-tlx>Закрыть</button></div>`;return}
@@ -1930,7 +2000,7 @@ function renderWrap(){const w=S.wrap;if(!w)return;const [a,b]=perRange(w);const 
   const label=w.mode==="year"?String(w.y):MONTHS[w.m]+" "+w.y,nowR=perRange({mode:w.mode,y:new Date().getFullYear(),m:new Date().getMonth()});
   let h=`<div class="wraphd"><span class="per">${isDemo()?'<span class="tag" style="font-size:10px;vertical-align:middle">Пример</span> ':""}${label}</span>
     <div class="segs" style="width:200px"><button data-wm="month" aria-pressed="${w.mode==="month"}">Месяц</button><button data-wm="year" aria-pressed="${w.mode==="year"}">Год</button></div>
-    <button class="nav" data-wn="-1" aria-label="Предыдущий период">‹</button><button class="nav" data-wn="1" aria-label="Следующий период" ${b>nowR[1]-1?"disabled":""}>›</button><button class="nav" data-wx aria-label="Закрыть">×</button></div>`;
+    <button class="nav" data-wn="-1" aria-label="Предыдущий период">‹</button><button class="nav" data-wn="1" aria-label="Следующий период" ${b>nowR[1]-1?"disabled":""}>›</button>${isDemo()?"":`<button class="btn sm" data-wshare>Поделиться</button>`}<button class="nav" data-wx aria-label="Закрыть">×</button></div>`;
   if(!inP.length){h+=`<div class="wc w6" style="align-items:flex-start"><div class="big">За ${w.mode==="year"?"этот год":"этот месяц"} нет прочитанных книг</div><p class="s">Листайте стрелками к другим периодам или отметьте книгу как прочитанную, и итоги появятся здесь.</p></div>`;$("#wrapin").innerHTML=h;return}
   const scB=brainScores(before),scA=brainScores(upto),scP=brainScores(inP);
   const sh=v=>{const s=v.reduce((x,y)=>x+y,0)||1;return v.map(x=>x/s)};const shB=sh(scB),shA=sh(scA);
@@ -1956,6 +2026,7 @@ $("#wrap").addEventListener("click",e=>{if(e.target.id==="wrap"){closeWrap();ret
   else if(t.dataset.wm){S.wrap.mode=t.dataset.wm;renderWrap()}
   else if(t.dataset.wn){S.wrap=perShift(S.wrap,+t.dataset.wn);renderWrap()}
   else if(t.dataset.wsel){closeWrap();select(t.dataset.wsel)}
+  else if(t.hasAttribute("data-wshare")){shareOpen("wrap")}
   else if(t.hasAttribute("data-wch")){closeWrap();S.tab="ch";renderPanel();if(window.innerWidth<900)setSheet(true)}});
 $("#wrapBtn").onclick=openWrap;
 
@@ -1975,7 +2046,7 @@ function paneRecs(){
 function paneAdd(){
   const q=S.query.trim().toLowerCase(),have=new Set(S.books.map(b=>b.title.toLowerCase()));
   const m=CATALOG.filter(c=>!have.has(c.title.toLowerCase())&&(!q||c.title.toLowerCase().includes(q)||c.author.toLowerCase().includes(q))).slice(0,q?24:10);
-  return `<div><p class="eyebrow">Каталог · ${CATALOG.length} книг</p><h2>Добавить книгу</h2></div>
+  return `${S.books.length?`<button class="back" data-back>← Мои книги</button>`:""}<div><p class="eyebrow">Каталог · ${CATALOG.length} книг</p><h2>Добавить книгу</h2></div>
   <div class="segs" role="group" aria-label="Статус новой книги">${Object.entries(STATUS).map(([k,v])=>`<button data-addst="${k}" aria-pressed="${S.addStatus===k}">${v}</button>`).join("")}</div>
   <label class="field search">Поиск по названию или автору<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input type="text" id="q" placeholder="Например, Чехов или Дюна" value="${esc(S.query)}" autocomplete="off"></label>
   <div class="list">${m.map(c=>{const d=D[top(c.w,1)[0]];return `<button class="item" data-addc="${c.cid}"><span class="n"><i style="background:${d.color};color:${d.color}"></i></span><span class="t">${esc(c.title)}</span><span class="plus">+</span><span class="a">${esc(c.author)} · ${esc(c.desc)}</span></button>`}).join("")||`<p class="empty">В каталоге такой книги нет. Добавьте её ниже.</p>`}</div>
@@ -1986,12 +2057,30 @@ function paneAdd(){
    <label class="field">${S.sample?"Жанр (пригодится, если Claude не узнает книгу)":"Жанр"}<select id="ng">${Object.keys(GENRES).map(g=>`<option>${g}</option>`).join("")}</select></label>
    <div><button class="btn primary" id="nadd">${S.sample?"Определить профиль и добавить":"Добавить на глобус"}</button></div></div>`;
 }
+function paneBooks(){
+  const all=visible(),q=S.mq.trim().toLowerCase();
+  const f=all.filter(b=>(S.mf==="all"||(b.status||"read")===S.mf)&&(!q||b.title.toLowerCase().includes(q)||String(b.author).toLowerCase().includes(q)));
+  const grp=[["reading","Читаю сейчас"],["read","Прочитано"],["want","Хочу прочитать"]];
+  let h=`<div class="row" style="justify-content:space-between;align-items:flex-end"><div><p class="eyebrow">${isDemo()?'<span class="tag">Пример</span>':""}Мои книги · ${all.length}</p><h2>Ваша полка</h2></div><button class="btn sm primary" data-go="add">+ Добавить книгу</button></div>`;
+  if(isDemo())h+=`<p class="sub">Пока здесь книги-примеры. Добавьте свои, и примеры исчезнут.</p>`;
+  h+=`<label class="field search"><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Найти среди моих книг</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input type="text" id="mq" placeholder="Найти книгу на глобусе" value="${esc(S.mq)}" autocomplete="off"></label>`;
+  h+=`<div class="segs">${[["all","Все"],["read","Прочитано"],["reading","Читаю"],["want","Хочу"]].map(([k,v])=>`<button data-mf="${k}" aria-pressed="${S.mf===k}">${v}</button>`).join("")}</div>`;
+  let any=false;
+  grp.forEach(([k,label])=>{const list=f.filter(b=>(b.status||"read")===k).sort((a,b)=>b.ts-a.ts);if(!list.length)return;any=true;
+    h+=`<div class="grp"><p class="eyebrow" style="margin-bottom:4px">${label} · ${list.length}</p><div class="list">${list.map(b=>{const d=D[top(b.w,1)[0]];return `<button class="item" data-sel="${b.id}"><span class="n"><i style="background:${k==="want"?"transparent":d.color};color:${d.color};${k==="want"?`border:1px dashed ${d.color};box-shadow:none`:""}"></i></span><span class="t">${esc(b.title)}</span><span class="s">${b.quote?"❝":""}${b.rating?" "+"★".repeat(b.rating):""}</span><span class="a">${esc(b.author)}</span></button>`}).join("")}</div></div>`});
+  if(!any)h+=`<p class="empty">${q?"Среди ваших книг такой нет. Её можно добавить через «+ Добавить книгу».":"Здесь пока пусто."}</p>`;
+  return h}
+function paneBrainAll(){return paneBrain()+`<div class="hr"></div>`+paneRecs()}
 function renderPanel(){
   document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
-  const pane=$("#pane"),ae=document.activeElement,keepQt=ae&&ae.id==="qt",keep=ae&&ae.id==="q",caret=keep?ae.selectionStart:0,scroll=pane.dataset.tab===S.tab?pane.scrollTop:0;
-  pane.innerHTML=({brain:paneBrain,book:paneBook,ch:paneCh,recs:paneRecs,add:paneAdd})[S.tab]();
-  if(pane.dataset.tab===S.tab||keep||keepQt)pane.querySelectorAll(":scope > *").forEach(el=>el.style.animation="none");
-  pane.dataset.tab=S.tab;pane.scrollTop=scroll;
+  const pane=$("#pane"),ae=document.activeElement,keepQt=ae&&ae.id==="qt",keepM=ae&&ae.id==="mq",keep=ae&&ae.id==="q",caret=(keep||keepM)?ae.selectionStart:0,curKey=S.tab==="books"?"books-"+S.sub:S.tab,scroll=pane.dataset.tab===curKey?pane.scrollTop:0;
+  if(!["brain","books","ch"].includes(S.tab))S.tab="brain";
+  const key=S.tab==="books"?"books-"+S.sub:S.tab;
+  pane.innerHTML=S.tab==="brain"?paneBrainAll():S.tab==="ch"?paneCh():S.sub==="book"?paneBook():S.sub==="add"?paneAdd():paneBooks();
+  if(pane.dataset.tab===key||keep||keepQt||keepM)pane.querySelectorAll(":scope > *").forEach(el=>el.style.animation="none");
+  pane.dataset.tab=key;pane.scrollTop=scroll;
+  if(keepM){const m=$("#mq");m.focus();m.setSelectionRange(caret,caret)}
+  const mq=$("#mq");if(mq)mq.oninput=e=>{S.mq=e.target.value;renderPanel()};
   if(keep){const q=$("#q");q.focus();q.setSelectionRange(caret,caret)}
   if(keepQt){const qt=$("#qt");if(qt){qt.focus();qt.setSelectionRange(qt.value.length,qt.value.length)}}
   const qt=$("#qt");if(qt)qt.oninput=e=>{S.qdraft[qt.dataset.book]=e.target.value};
@@ -2002,7 +2091,10 @@ $("#pane").addEventListener("click",async e=>{
   const t=e.target.closest("button");if(!t)return;
   if(t.dataset.sel){select(t.dataset.sel);return}
   if(t.dataset.dom!==undefined){setFocus(+t.dataset.dom);return}
-  if(t.dataset.go){S.tab=t.dataset.go;renderPanel();return}
+  if(t.dataset.go){if(t.dataset.go==="add"){S.tab="books";S.sub="add"}else S.tab=t.dataset.go;renderPanel();if(window.innerWidth<900&&S.sub==="add")setSheet(true);return}
+  if(t.hasAttribute("data-back")){S.sub="list";S.confirmDel=false;renderPanel();return}
+  if(t.dataset.mf){S.mf=t.dataset.mf;renderPanel();return}
+  if(t.dataset.share){shareOpen(t.dataset.share);return}
   if(t.dataset.addc){addBook(CATALOG.find(x=>x.cid===t.dataset.addc),t.dataset.st);return}
   if(t.dataset.addst){S.addStatus=t.dataset.addst;renderPanel();return}
   if(t.dataset.status){const b=S.books.find(x=>x.id===S.selected);if(!b)return;const st=t.dataset.status;if((b.status||"read")===st)return;
@@ -2056,21 +2148,91 @@ function refresh(){
   const nRead=books.filter(isRead).length,nNow=books.filter(b=>b.status==="reading").length,nWant=books.filter(b=>b.status==="want").length,bt=brainType(books);
   $("#hudN").textContent=nRead;
   $("#hudEye").innerHTML=isDemo()?'<span class="tag">Пример</span> Книг на глобусе':"Книг на глобусе";
-  $("#hudSub").innerHTML=`${bt?`Тип мозга: <b>${bt.t.name}</b><br>`:""}${L.length} ${plural(L.length,"связь","связи","связей")} · сильнее всего: <b style="color:${lead.color}">${lead.name}</b>${nNow||nWant?`<br>читаю: ${nNow} · в планах: ${nWant}`:""}`;
+  $("#hudSub").innerHTML=`${bt?`Тип мозга: <b>${bt.t.name}</b>`:"Добавьте книги, чтобы узнать тип мозга"}<span class="more"><br>${L.length} ${plural(L.length,"связь","связи","связей")} · сильнее всего: <b style="color:${lead.color}">${lead.name}</b>${nNow||nWant?`<br>читаю: ${nNow} · в планах: ${nWant}`:""}</span>`;
   if(S.selected&&S.selected!==S.pendingFocus&&!books.some(b=>b.id===S.selected))S.selected=null;
-  if(GL&&!TL.on)GL.build(books,isDemo());
+  updateSlider();
+  if(GL&&!TL.on){const gid=S.growId&&books.some(b=>b.id===S.growId)?S.growId:null;GL.build(S.timeAt!==null?booksAt(S.timeAt):books,isDemo(),gid&&S.timeAt===null?{lastId:gid}:{});if(gid){S.growId=null;if(S.timeAt===null){GL.burst(gid);const b=books.find(x=>x.id===gid);if(b)S.burst={id:gid,t0:performance.now()+350,g:top(b.w,2)}}}}
   chCheck();renderPanel();renderPop();if(S.wrap)renderWrap();
   if(S.pendingFocus&&books.some(b=>b.id===S.pendingFocus)){if(GL)GL.focusBook(S.pendingFocus);S.pendingFocus=null}
 }
 
+/* ---------- Машина времени ---------- */
+function booksAt(t){return visible().filter(b=>(isRead(b)&&b.ts<=t)||(b.status==="reading"&&(b.startedAt||b.ts)<=t))}
+function tRange(){const r=visible().filter(isRead).map(b=>b.ts);if(r.length<2)return null;const mn=Math.min(...r),mx=Math.max(...r);if(mx-mn<2*86400000)return null;return [mn-86400000,Date.now()]}
+function updateSlider(){const el=$("#tslide"),rg=tRange();el.hidden=!rg||TL.on;if(!rg){S.timeAt=null;return}
+  const inp=$("#tRange"),lbl=$("#tLbl");const v=S.timeAt===null?1000:Math.round((S.timeAt-rg[0])/(rg[1]-rg[0])*1000);inp.value=v;inp.style.setProperty("--pct",v/10+"%");
+  el.classList.toggle("past",S.timeAt!==null);
+  if(S.timeAt===null){lbl.textContent="Сейчас"}else{const d=new Date(S.timeAt),n=booksAt(S.timeAt).filter(isRead).length;lbl.textContent=`${d.getDate()} ${MONTHS_G[d.getMonth()].slice(0,3)} ${d.getFullYear()} · ${n} ${plural(n,"книга","книги","книг")}`}}
+let tRaf=0;
+$("#tRange").addEventListener("input",e=>{const rg=tRange();if(!rg)return;const v=+e.target.value;S.timeAt=v>=1000?null:rg[0]+(rg[1]-rg[0])*v/1000;S.pop=false;renderPop();updateSlider();
+  cancelAnimationFrame(tRaf);tRaf=requestAnimationFrame(()=>{if(GL)GL.build(S.timeAt!==null?booksAt(S.timeAt):visible(),isDemo())})});
+$("#tLbl").onclick=()=>{if(S.timeAt===null)return;S.timeAt=null;updateSlider();if(GL)GL.build(visible(),isDemo())};
+
+/* ---------- Всплывающая награда ---------- */
+function placeBurst(x,y,f,p){const el=$("#burst");if(f<0.05||!S.burst){el.hidden=true;return}
+  if(el.hidden||el.dataset.id!==S.burst.id){el.dataset.id=S.burst.id;el.innerHTML=S.burst.g.map(i=>`<span style="color:${D[i].color}">+${D[i].name}</span>`).join("");el.hidden=false}
+  const e=1-Math.pow(1-p,3);el.style.transform=`translate(${x}px,${y}px) translate(-50%,calc(-100% - ${18+e*46}px)) scale(${0.85+Math.min(1,p*6)*0.15})`;el.style.opacity=String(Math.min(1,p*5)*(p>0.7?(1-p)/0.3:1))}
+
+/* ---------- Нижняя панель на телефоне: перетаскивание ---------- */
+(function(){const g=$("#grab"),pn=$("#panel");let y0=0,h0=0,drag=false,moved=0;
+  g.addEventListener("pointerdown",e=>{if(innerWidth>=900)return;drag=true;moved=0;y0=e.clientY;h0=pn.offsetHeight;pn.style.transition="none";g.setPointerCapture(e.pointerId)});
+  g.addEventListener("pointermove",e=>{if(!drag)return;const dy=e.clientY-y0;moved=Math.max(moved,Math.abs(dy));const max=innerHeight-90,min=150;pn.style.height=Math.max(min,Math.min(max,h0-dy))+"px"});
+  const end=e=>{if(!drag)return;drag=false;pn.style.transition="";const hNow=pn.offsetHeight;pn.style.height="";if(moved<6){setSheet(!pn.classList.contains("full"));return}setSheet(hNow>innerHeight*0.55)};
+  g.addEventListener("pointerup",end);g.addEventListener("pointercancel",end);
+  g.onclick=null})();
+
+/* ---------- Карточка «Поделиться» ---------- */
+function loadImg(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src})}
+function wrapText(g,text,maxW){const words=String(text).split(" "),lines=[];let line="";words.forEach(w=>{const t=line?line+" "+w:w;if(g.measureText(t).width>maxW&&line){lines.push(line);line=w}else line=t});if(line)lines.push(line);return lines}
+async function makeCard(kind){const W=1080,H=1920,c=document.createElement("canvas");c.width=W;c.height=H;const g=c.getContext("2d");
+  const cs=getComputedStyle(document.documentElement),acc=cs.getPropertyValue("--accent").trim()||"#b99dff",acc2=cs.getPropertyValue("--accent-2").trim()||"#f2a7ff",txt=cs.getPropertyValue("--text").trim()||"#fff",mut=cs.getPropertyValue("--muted").trim()||"#aaa",P=PAL[S.palette];
+  try{await document.fonts.ready}catch(e){}
+  const disp='"Prata", Georgia, serif',body='"Golos Text", system-ui, sans-serif';
+  g.fillStyle=P.bg;g.fillRect(0,0,W,H);
+  [[200,520,700,P.neb1,.35],[900,1300,800,P.neb2,.28],[540,900,520,P.atmo,.25]].forEach(([x,y,r,col,a])=>{const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,col+Math.round(a*255).toString(16).padStart(2,"0"));gr.addColorStop(1,col+"00");g.fillStyle=gr;g.fillRect(0,0,W,H)});
+  for(let i=0;i<420;i++){const x=Math.random()*W,y=Math.random()*H,r=Math.random()<.92?Math.random()*1.4+.3:Math.random()*2.6+1.2;g.globalAlpha=Math.random()*.7+.2;g.fillStyle="#fff";g.beginPath();g.arc(x,y,r,0,7);g.fill()}g.globalAlpha=1;
+  if(GL&&GL.snapshot){try{const img=await loadImg(GL.snapshot()),side=Math.min(img.width,img.height)*0.86,sx=(img.width-side)/2,sy=(img.height-side)/2;g.globalCompositeOperation="lighter";g.drawImage(img,sx,sy,side,side,90,330,900,900);g.globalCompositeOperation="source-over"}catch(e){}}
+  else{const gr=g.createRadialGradient(540,780,40,540,780,420);gr.addColorStop(0,acc+"55");gr.addColorStop(1,acc+"00");g.fillStyle=gr;g.beginPath();g.arc(540,780,420,0,7);g.fill()}
+  g.textAlign="center";g.fillStyle=txt;g.font=`500 34px ${body}`;g.letterSpacing="10px";g.fillText("NEUROGLOBE",540,180);g.letterSpacing="0px";
+  const books=visible(),sc=brainScores(books),mx=Math.max(...sc,1);
+  const grad=(y)=>{const l=g.createLinearGradient(0,y-90,0,y+10);l.addColorStop(0,"#ffffff");l.addColorStop(1,acc);return l};
+  if(kind==="type"){const bt=brainType(books);g.fillStyle=mut;g.font=`500 38px ${body}`;g.fillText("Мой тип мозга",540,1330);
+    g.font=`400 104px ${disp}`;g.fillStyle=grad(1450);g.shadowColor=acc;g.shadowBlur=40;const nm=bt?bt.t.name:"Читатель";const lines=wrapText(g,nm,960);lines.forEach((l,i)=>g.fillText(l,540,1450+i*112));g.shadowBlur=0;
+    let y=1450+lines.length*112-30;g.fillStyle=acc;g.font=`500 32px ${body}`;wrapText(g,bt?bt.t.nets:"",900).forEach(l=>{g.fillText(l,540,y);y+=44});
+    y+=30;top(sc,3).forEach(i=>{const d=D[i];g.textAlign="left";g.fillStyle=txt;g.font=`600 34px ${body}`;g.fillText(d.name,150,y);g.textAlign="right";g.fillStyle=mut;g.fillText(Math.round(sc[i]/mx*100)+"%",930,y);g.fillStyle="rgba(255,255,255,.12)";g.beginPath();g.roundRect(150,y+18,780,12,6);g.fill();g.fillStyle=d.color;g.shadowColor=d.color;g.shadowBlur=18;g.beginPath();g.roundRect(150,y+18,780*sc[i]/mx,12,6);g.fill();g.shadowBlur=0;y+=96});
+    g.textAlign="center";g.fillStyle=mut;g.font=`400 34px ${body}`;const n=books.filter(isRead).length;g.fillText(`${n} ${plural(n,"книга","книги","книг")} на моём глобусе`,540,Math.min(1840,y+30))}
+  else{const w=S.wrap;const [a,b]=perRange(w),inP=books.filter(x=>isRead(x)&&x.ts>=a&&x.ts<b);const label=w.mode==="year"?String(w.y):MONTHS[w.m]+" "+w.y;
+    g.fillStyle=mut;g.font=`500 40px ${body}`;g.fillText("Мои итоги · "+label,540,1320);
+    g.font=`400 230px ${disp}`;g.fillStyle=grad(1560);g.shadowColor=acc;g.shadowBlur=50;g.fillText(String(inP.length),540,1560);g.shadowBlur=0;
+    g.fillStyle=txt;g.font=`500 40px ${body}`;g.fillText(plural(inP.length,"книга прочитана","книги прочитаны","книг прочитано"),540,1630);
+    const scP=brainScores(inP),gi=top(scP,1)[0];g.fillStyle=mut;g.font=`400 34px ${body}`;g.fillText("сильнее всего выросла",540,1720);g.fillStyle=D[gi].color;g.font=`400 56px ${disp}`;g.fillText(D[gi].name,540,1790)}
+  g.fillStyle=mut;g.font=`400 26px ${body}`;g.textAlign="center";g.fillText("карта чтения и мозга",540,1880);
+  return c}
+let shareBlob=null;
+async function shareOpen(kind){const box=$("#sharein");box.innerHTML=`<div class="wraphd"><span class="per" style="font-size:22px">Поделиться</span><button class="nav" data-sx aria-label="Закрыть">×</button></div><p class="sub">Готовим картинку…</p>`;$("#share").hidden=false;
+  try{const c=await makeCard(kind);shareBlob=await new Promise(r=>c.toBlob(r,"image/png"));const url=URL.createObjectURL(shareBlob);
+    const canShare=!!(navigator.canShare&&navigator.share&&navigator.canShare({files:[new File([shareBlob],"neuroglobe.png",{type:"image/png"})]}));
+    box.innerHTML=`<div class="wraphd"><span class="per" style="font-size:22px">Поделиться</span><button class="nav" data-sx aria-label="Закрыть">×</button></div><img src="${url}" alt="Карточка для сторис"><div class="row">${canShare?`<button class="btn primary" data-sshare>Отправить</button>`:""}<button class="btn ${canShare?"":"primary"}" data-ssave>Сохранить картинку</button></div><p class="fine">Размер под сторис: 1080 × 1920.</p>`}
+  catch(e){box.innerHTML=`<div class="wraphd"><span class="per" style="font-size:22px">Поделиться</span><button class="nav" data-sx aria-label="Закрыть">×</button></div><p class="sub">Не получилось собрать картинку. Попробуйте ещё раз.</p>`}}
+$("#share").addEventListener("click",async e=>{if(e.target.id==="share"){$("#share").hidden=true;return}const t=e.target.closest("button");if(!t)return;
+  if(t.hasAttribute("data-sx")){$("#share").hidden=true;return}
+  if(t.hasAttribute("data-sshare")){try{await navigator.share({files:[new File([shareBlob],"neuroglobe.png",{type:"image/png"})],title:"Neuroglobe"})}catch(err){}return}
+  if(t.hasAttribute("data-ssave")){if(S.dl){try{const r=await S.dl.save({filename:"neuroglobe.png",data:shareBlob});if(r&&r.status==="saved")toast("Картинка сохранена")}catch(err){}return}
+    try{const u=URL.createObjectURL(shareBlob),a=document.createElement("a");a.href=u;a.download="neuroglobe.png";document.body.appendChild(a);a.click();a.remove();toast("Картинка сохранена")}catch(err){toast("Не получилось сохранить")}}});
+
 /* ================= Приветствие, вход, инструкция ================= */
 const LOGO=`<svg width="34" height="34" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="8" fill="none" stroke="var(--accent)" stroke-width="1.6"/><ellipse cx="13" cy="13" rx="12" ry="4.5" fill="none" stroke="var(--accent-2)" stroke-width="1.2" transform="rotate(-24 13 13)" opacity=".85"/><circle cx="13" cy="13" r="2.6" fill="#fff"/></svg>`;
-const OB={step:null,g:0,note:""};
+const OB={step:null,g:0,note:"",pick:new Set()};
+const PICK=["Мастер и Маргарита","Преступление и наказание","Война и мир","Анна Каренина","Евгений Онегин","Герой нашего времени","Отцы и дети","Мёртвые души","Собачье сердце","Идиот","1984","Маленький принц","Гарри Поттер и философский камень","Властелин колец","Три товарища","Над пропастью во ржи","Портрет Дориана Грея","Великий Гэтсби","Гордость и предубеждение","Джейн Эйр","Шантарам","Сто лет одиночества","Цветы для Элджернона","Убить пересмешника","Норвежский лес","Дюна","Задача трёх тел","Десять негритят","Убийства и кексики","Хороших девочек не убивают","Атомные привычки","Sapiens. Краткая история человечества","Думай медленно… решай быстро","Тонкое искусство пофигизма","Человек в поисках смысла","О дивный новый мир"].map(byTitle).filter(Boolean);
+async function batchAdd(list){const now=Date.now();const bs=list.map((c,i)=>({id:now.toString(36)+i.toString(36)+Math.random().toString(36).slice(2,5),title:c.title,author:c.author,w:c.w.slice(),rating:0,ts:now-(list.length-i)*60000,status:"read",startedAt:null,cid:c.cid,note:c.desc||""}));
+  const last=bs[bs.length-1];S.growId=last.id;S.selected=null;S.tab="brain";
+  if(S.mode==="cloud"){for(const b of bs){try{const {id,...data}=b;await S.col.doc(id).set(data)}catch(e){}}}else{S.books.push(...bs);lsSave();refresh()}
+  toast(`Глобус построен: ${bs.length} ${plural(bs.length,"книга","книги","книг")}`)}
 function obOpen(step){OB.step=step;OB.note="";if(step==="guide")OB.g=0;document.body.classList.add("ob");S.pop=false;renderPop();obRender();$("#ob").hidden=false;setTimeout(()=>{const f=$("#ob [data-focus]");if(f)f.focus()},60)}
 function obClose(){$("#ob").hidden=true;document.body.classList.remove("ob");OB.step=null;store("neuroglobe.onboarded.v1","1");if(!store("neuroglobe.tips.v1"))setTimeout(coachStart,700)}
 const GUIDE=[
  {t:"Что это за приложение",ill:"globe",items:["Глобус — это схема мозга. Он поделён на семь зон: эмпатия, язык, воображение, логика, самоконтроль, эмоции, память.","Каждая книга, которую вы отметили, становится точкой. Точка встаёт ближе к тем зонам, которые книга тренирует сильнее всего.","Чем больше книг отметите, тем точнее картина и советы."]},
- {t:"Как добавить книгу",ill:"add",items:["Откройте вкладку «Добавить» и найдите книгу по названию или автору. В каталоге больше "+(Math.floor(CATALOG.length/100)*100)+" книг.","Сверху выберите, прочитана книга, вы читаете её сейчас или только собираетесь.","Если нужной книги нет, внизу можно добавить свою: название, автор и жанр."]},
+ {t:"Как добавить книгу",ill:"add",items:["Откройте вкладку «Книги», нажмите «+ Добавить книгу» и найдите её по названию или автору. В каталоге больше "+(Math.floor(CATALOG.length/100)*100)+" книг.","Сверху выберите, прочитана книга, вы читаете её сейчас или только собираетесь.","Если нужной книги нет, внизу можно добавить свою: название, автор и жанр."]},
  {t:"Как смотреть на глобус",ill:"legend",items:["Цвет точки — главная зона книги. Золотая линия соединяет книги в том порядке, в котором вы их читали.","Мигающая точка — книга, которую вы читаете сейчас. Полупрозрачная — та, что в планах.","Нажмите на точку, и откроется карточка: что книга даёт и почему. Глобус можно крутить пальцем и приближать."]},
  {t:"Что ещё здесь есть",ill:"perks",items:["Тип мозга. Какие зоны вы нагружаете чаще всего, в чём ваша сильная сторона и что стоит подтянуть.","Челленджи. Например, три книги про эмпатию за месяц. Когда закончите, зона на глобусе загорится.","Цитаты. К любой книге можно записать мысль или цитату, она будет всплывать на глобусе.","Таймлапс и итоги. Весь путь чтения можно посмотреть как короткое видео, а в конце месяца или года увидеть, что изменилось."]},
  {t:"Насколько это научно",ill:"science",items:["Семь зон глобуса — это реальные сети мозга, их описывают в нейробиологических исследованиях. Ссылки на работы есть во вкладке «Мозг», в блоке «Научная основа».","Это модель, а не снимок вашего мозга. Приложение оценивает книги, а не измеряет нейроны.","Чтение действительно влияет на мозг, но умеренно. Так что результаты здесь — подсказка, а не диагноз."]}
@@ -2086,7 +2248,11 @@ function obRender(){const el=$("#ob");
   el.innerHTML=`<div class="in"><div class="mark">${LOGO}Neuroglobe</div><h1>Что книги делают <em>с вашим мозгом</em></h1>
    <p class="lead">Отмечайте книги, которые прочитали. Каждая появится точкой на глобусе, поделённом на семь зон мозга. Со временем станет видно, что вы развиваете чтением, чего не хватает и что почитать дальше.</p>
    <div class="feats"><div class="feat glass"><i>◎</i><div><b>Глобус</b><br>Ваши книги на карте мозга</div></div><div class="feat glass"><i>✦</i><div><b>Тип мозга</b><br>Какие зоны вы нагружаете чаще всего</div></div><div class="feat glass"><i>↗</i><div><b>Советы</b><br>Чем больше книг, тем точнее подборка</div></div></div>
-   <div class="row" style="gap:12px"><button class="btn primary lg" data-ob="login" data-focus>Начать</button><button class="btn ghost lg" data-ob="guide">Как это устроено</button></div></div>`;return}
+   <div class="row" style="gap:12px"><button class="btn primary lg" data-ob="start" data-focus>Начать</button><button class="btn ghost lg" data-ob="guide">Как это устроено</button></div></div>`;return}
+ if(OB.step==="pick"){el.className="ob modal";const n=OB.pick.size;
+  el.innerHTML=`<div class="pick glass" role="dialog" aria-label="Что вы уже читали"><div><h2>Что вы уже читали?</h2><p class="sub" style="margin-top:6px">Отметьте всё, что помните. Глобус сразу построится по вашим книгам, остальное можно добавить потом.</p></div>
+   <div class="pgrid">${PICK.map(c=>{const d=D[top(c.w,1)[0]];return `<button class="pcard" data-pk="${c.cid}" aria-pressed="${OB.pick.has(c.cid)}" style="--c:${d.color}"><i class="ck">✓</i><b>${esc(c.title)}</b><span>${esc(c.author)}</span></button>`}).join("")}</div>
+   <div class="pfoot"><button class="btn ghost" data-ob="skip">Пропустить</button><button class="btn primary" data-ob="build" ${n?"":"disabled"} data-focus>${n?`Построить глобус · ${n}`:"Выберите книги"}</button></div></div>`;return}
  if(OB.step==="login"){el.className="ob modal";const cloud=S.mode==="cloud",inClaude=!!(window.claude&&window.claude.use),n=S.books.length;
   el.innerHTML=`<div class="card2 glass" role="dialog" aria-label="Где хранятся книги"><button class="x2" data-ob="close" aria-label="Закрыть">×</button><div class="mark" style="font-size:18px">${LOGO}Neuroglobe <span class="tag" style="margin-left:4px">Тестовая версия</span></div>
    <div><h2>${cloud?"Вы вошли":"Где хранятся ваши книги"}</h2>
@@ -2104,6 +2270,10 @@ $("#ob").addEventListener("click",e=>{const t=e.target.closest("button");if(!t){
  const a=t.dataset.ob;
  if(a==="export"){exportData();return}
  if(a==="import"){$("#importIn").value="";$("#importIn").click();return}
+ if(t.dataset.pk){const id=t.dataset.pk;OB.pick.has(id)?OB.pick.delete(id):OB.pick.add(id);const sc=$("#ob .pgrid").scrollTop;obRender();$("#ob .pgrid").scrollTop=sc;return}
+ if(a==="start"){if(!S.books.length)obOpen("pick");else obClose();return}
+ if(a==="skip"){obClose();return}
+ if(a==="build"){const list=PICK.filter(c=>OB.pick.has(c.cid));OB.pick.clear();obClose();if(list.length)batchAdd(list);return}
  if(a==="login"||a==="guide"){obOpen(a);return}
  if(a==="enter"){if(store("neuroglobe.onboarded.v1"))obClose();else obOpen("guide");return}
  if(a==="next"){OB.g=Math.min(GUIDE.length-1,OB.g+1);obRender();return}
